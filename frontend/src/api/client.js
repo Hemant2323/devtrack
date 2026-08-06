@@ -1,15 +1,49 @@
-// Central API client — every request to the backend goes through here.
-// Later (auth step) this is the ONE place we'll attach the JWT header,
-// instead of repeating it in every component.
+// Central API client — all fetch calls go through here.
+// This is the single place we attach the JWT header, handle 401s, etc.
 
-// Vite exposes env vars that start with VITE_ via import.meta.env.
-// Fallback covers local development with the default uvicorn port.
 const BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
 
-export async function apiGet(path) {
-  const response = await fetch(`${BASE_URL}${path}`);
+function getToken() {
+  return localStorage.getItem("access_token");
+}
+
+async function request(method, path, body) {
+  const headers = { "Content-Type": "application/json" };
+  const token = getToken();
+  if (token) headers["Authorization"] = `Bearer ${token}`;
+
+  const response = await fetch(`${BASE_URL}${path}`, {
+    method,
+    headers,
+    body: body !== undefined ? JSON.stringify(body) : undefined,
+  });
+
   if (!response.ok) {
-    throw new Error(`API error ${response.status} on GET ${path}`);
+    const err = await response.json().catch(() => ({ detail: response.statusText }));
+    const error = new Error(err.detail ?? "Request failed");
+    error.status = response.status;
+    throw error;
   }
+
+  // 204 No Content has no body
+  if (response.status === 204) return null;
   return response.json();
+}
+
+export const api = {
+  get: (path) => request("GET", path),
+  post: (path, body) => request("POST", path, body),
+  patch: (path, body) => request("PATCH", path, body),
+  delete: (path) => request("DELETE", path),
+};
+
+// convenience: save/clear tokens in localStorage
+export function saveTokens(access_token, refresh_token) {
+  localStorage.setItem("access_token", access_token);
+  localStorage.setItem("refresh_token", refresh_token);
+}
+
+export function clearTokens() {
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("refresh_token");
 }
