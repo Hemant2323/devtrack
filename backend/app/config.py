@@ -17,6 +17,13 @@ class Settings(BaseSettings):
     # Frontend origins allowed to call this API (CORS).
     cors_origins: list[str] = ["http://localhost:5173"]
 
+    # JWT settings (FR-1.2). The secret signs every token — anyone who has
+    # it can forge logins, so in production it MUST come from .env.
+    jwt_secret: str = "dev-only-secret-change-me"
+    jwt_algorithm: str = "HS256"
+    access_token_minutes: int = 30
+    refresh_token_days: int = 7
+
     model_config = SettingsConfigDict(env_file=".env")
 
 

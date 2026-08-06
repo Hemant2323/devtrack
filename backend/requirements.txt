@@ -8,3 +8,12 @@ pydantic-settings==2.9.1   # reads settings from .env into a typed class
 # --- Database ---
 sqlalchemy==2.0.41         # ORM: talk to the DB with Python classes, not raw SQL
 alembic==1.16.1            # database migrations (versioned schema changes)
+
+# --- Authentication ---
+bcrypt==4.3.0              # password hashing (one-way, salted)
+pyjwt==2.10.1              # create/verify JSON Web Tokens
+email-validator==2.2.0     # lets Pydantic validate EmailStr fields
+
+# --- Testing ---
+pytest==8.3.5              # test runner
+httpx==0.28.1              # HTTP client used by FastAPI's TestClient
