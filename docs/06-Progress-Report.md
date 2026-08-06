@@ -37,9 +37,12 @@ Full SE documentation set produced before any code (plan-driven development):
 
 ---
 
-## Milestone 3 — Authentication FR-1 (Sprint 1, step 2) 🔄 in progress
+## Milestone 3 — Authentication FR-1 (Sprint 1, step 2) ✅
+**Date:** 6 Aug 2026 · **Commit:** `57cc7d8` · **Details:** [progress/03-authentication.md](progress/03-authentication.md)
 
-Planned: User model + Alembic migration · bcrypt password hashing · JWT access (30 min) + refresh (7 days) tokens · signup/login/refresh endpoints · layered implementation (schema → router → service → repository) · pytest suite (TC-AUTH-01…05).
+User model + first Alembic migration · bcrypt hashing · JWT access (30 min) + refresh (7 days) · `POST /auth/signup|login|refresh`, `GET /auth/me` · full layered implementation · `get_current_user` dependency for protecting future endpoints · **13/13 tests passing** (TC-AUTH-01…04, enumeration guard, refresh flows) + live curl verification.
+
+> ℹ️ Detailed milestone history now lives in [docs/progress/](progress/README.md) (tool-independent record; recovery guide in [HANDOFF.md](progress/HANDOFF.md)). This file stays as the one-page summary.
 
 ---
 
@@ -49,3 +52,4 @@ Planned: User model + Alembic migration · bcrypt password hashing · JWT access
 |---|---|
 | `e92b0de` | Planning docs (SRS, UML, architecture, plan, test plan) |
 | `ca082ba` | Backend + frontend scaffolds, health check, CORS, verified E2E |
+| `57cc7d8` | Authentication FR-1 backend + tests |
