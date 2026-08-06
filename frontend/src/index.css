@@ -1,0 +1,10 @@
+/* Global reset + base styles. Component styles live next to components. */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+  color: #08060d;
+}

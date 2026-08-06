@@ -1,0 +1,10 @@
+# --- Web framework ---
+fastapi==0.115.12          # the API framework: routing, validation, OpenAPI docs
+uvicorn[standard]==0.34.2  # the ASGI server that actually runs FastAPI
+
+# --- Configuration ---
+pydantic-settings==2.9.1   # reads settings from .env into a typed class
+
+# --- Database ---
+sqlalchemy==2.0.41         # ORM: talk to the DB with Python classes, not raw SQL
+alembic==1.16.1            # database migrations (versioned schema changes)

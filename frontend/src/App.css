@@ -1,0 +1,28 @@
+.scaffold {
+  max-width: 640px;
+  margin: 15vh auto 0;
+  text-align: center;
+  font-family: system-ui, sans-serif;
+}
+
+.api-status {
+  margin-top: 2rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.api-status.checking {
+  background: #f4f3ec;
+  color: #6b6375;
+}
+
+.api-status.online {
+  background: #e7f6ec;
+  color: #1a7f37;
+}
+
+.api-status.offline {
+  background: #fdecea;
+  color: #b42318;
+}
