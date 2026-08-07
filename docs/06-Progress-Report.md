@@ -46,6 +46,22 @@ User model + first Alembic migration · bcrypt hashing · JWT access (30 min) + 
 
 ---
 
+## Milestone 4 — Project CRUD + RBAC FR-2 (Sprint 1, step 3) ✅
+**Date:** 6 Aug 2026 · **Commit:** `b6fa2cb` · **Details:** [progress/04-projects-backend.md](progress/04-projects-backend.md)
+
+`Project`, `ProjectMember` (Role enum, unique constraint), `Component` models + Alembic migration · full CRUD + membership + components · RBAC: creator=Admin, non-member 404 existence hiding, archived guard · 13 new tests → **26/26 total passing** (TC-PRJ-01…04).
+
+---
+
+## Milestone 5 — Frontend Auth + Project Pages + CI (Sprint 1, step 4) ✅
+**Date:** 6 Aug 2026 · **Commit:** `cfcee33` · **Details:** [progress/05-frontend-sprint1.md](progress/05-frontend-sprint1.md)
+
+`AuthContext` (session restore from token) · `ProtectedRoute` · Login + Signup pages · `ProjectsPage` (list + inline create form) · React Router 7 routing in `main.jsx` · central API client with JWT header attachment · CI workflow (ruff + pytest + frontend build) · **Production build: 231 kB JS, clean**.
+
+**Sprint 1 complete ✅** — full working stack: signup → login → create project → logout.
+
+---
+
 ## Git Milestone Log
 
 | Commit | Milestone |
@@ -53,3 +69,5 @@ User model + first Alembic migration · bcrypt hashing · JWT access (30 min) + 
 | `e92b0de` | Planning docs (SRS, UML, architecture, plan, test plan) |
 | `ca082ba` | Backend + frontend scaffolds, health check, CORS, verified E2E |
 | `57cc7d8` | Authentication FR-1 backend + tests |
+| `b6fa2cb` | Projects FR-2 backend + RBAC + 26 tests |
+| `cfcee33` | Frontend auth + project pages + CI workflow |
