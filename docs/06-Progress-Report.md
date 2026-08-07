@@ -62,12 +62,21 @@ User model + first Alembic migration · bcrypt hashing · JWT access (30 min) + 
 
 ---
 
+## Milestone 6 — Issue CRUD + Activity History FR-3, FR-6.2 (Sprint 2, step 1) ✅
+**Date:** 7 Aug 2026 · **Commit:** `e71afde` · **Details:** [progress/06-issues.md](progress/06-issues.md)
+
+`Issue` (single table, TASK/BUG, soft delete, sequential keys), `Sprint` (schema, no endpoints yet), `Activity` (append-only log) models + Alembic migration · type-dependent schema validation (bug requires severity, task rejects it) · atomic sequential key generation (`DEV-42`) · activity logged in same DB transaction as every mutation · full filter/search API · **35/35 tests passing** (TC-ISS-01…05 + RBAC + search).
+
+---
+
 ## Git Milestone Log
 
 | Commit | Milestone |
 |---|---|
-| `e92b0de` | Planning docs (SRS, UML, architecture, plan, test plan) |
-| `ca082ba` | Backend + frontend scaffolds, health check, CORS, verified E2E |
-| `57cc7d8` | Authentication FR-1 backend + tests |
-| `b6fa2cb` | Projects FR-2 backend + RBAC + 26 tests |
-| `cfcee33` | Frontend auth + project pages + CI workflow |
+| `e92b0de` | Planning docs |
+| `ca082ba` | Backend + frontend scaffolds |
+| `57cc7d8` | Auth FR-1 backend |
+| `b6fa2cb` | Projects FR-2 backend + RBAC |
+| `cfcee33` | Frontend auth + project pages + CI |
+| `ccf25a8` | Sprint 1 complete docs |
+| `e71afde` | Issues FR-3 + activity log FR-6.2 |

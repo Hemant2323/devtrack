@@ -3,13 +3,13 @@
 > Read this + `docs/progress/README.md`, then the milestone reports.
 > Architecture source of truth: `docs/03-Architecture.md`. Requirements: `docs/01-SRS.md`.
 
-**Last updated:** 6 Aug 2026, after Milestone 05 — Sprint 1 complete.
+**Last updated:** 7 Aug 2026, after Milestone 06 — Issue CRUD + Activity history.
 
 ## Where we are
-- **Sprint 1 done.** All planned Sprint 1 work is committed and tested.
-- ✅ **Working:** Scaffolds · Auth FR-1 (signup/login/refresh/me) · Projects FR-2 (CRUD, membership/RBAC, components) · Frontend (login, signup, project list) · CI (GitHub Actions)
-- 🔄 **In progress:** Nothing mid-edit — completely clean state at commit `cfcee33`.
-- ❌ **Not started:** Sprint 2+ features (Issues FR-3, Kanban FR-4, Comments FR-6, Activity history FR-6.2, Notifications FR-8, Sprints FR-5, Dashboard FR-10, Test cases FR-9, AI triage FR-11).
+- **Sprint 2**, step 1 done.
+- ✅ **Working:** Scaffolds · Auth FR-1 · Projects FR-2 (CRUD, membership/RBAC, components) · Issues FR-3 (CRUD, soft delete, sequential keys, search/filter) · Activity log FR-6.2 (append-only, logged in same transaction) · Frontend (login, signup, project list) · CI
+- 🔄 **In progress:** Nothing mid-edit — clean state at commit `e71afde`.
+- ❌ **Not started (rest of Sprint 2):** Kanban board endpoint FR-4 · Comments FR-6.1 · Notifications FR-8 · Sprint endpoints FR-5 · Dashboard FR-10 · Test cases FR-9 · AI triage FR-11
 
 ## Architecture conventions (keep following these)
 1. Layers: **router → service → repository**. Routers thin; business rules + permission checks in services; all ORM in repositories.
@@ -45,24 +45,26 @@ npm run build
 `DATABASE_URL`, `CORS_ORIGINS`, `JWT_SECRET`. Later: `ANTHROPIC_API_KEY` (Sprint 5).
 
 ## Git log (newest first)
-- `cfcee33` frontend auth + project pages + CI workflow
-- `b6fa2cb` projects FR-2 backend + RBAC + 26 tests
-- `0fefc88` progress history docs (milestones 01-03)
-- `57cc7d8` auth FR-1 backend + tests
-- `84c238a` progress report doc
+- `e71afde` issues FR-3 + activity log FR-6.2 + 35 tests
+- `ccf25a8` Sprint 1 docs
+- `cfcee33` frontend auth + project pages + CI
+- `b6fa2cb` projects FR-2 backend + RBAC
+- `57cc7d8` auth FR-1 backend
 - `ca082ba` scaffolds
 - `e92b0de` planning docs
 
-**Local repo only — nothing pushed. Never push without the owner's say-so.**
+**Local repo only — nothing pushed.**
 
-## Exact next task: Sprint 2, Step 1 — Issue CRUD (FR-3) backend
+## Exact next task: Sprint 2 Step 2 — Kanban board + Comments + Notifications
 
-Build the `Issue` model and `Sprint` model together (Sprint is needed for the issue's `sprint_id` FK), Alembic migration, then the full layered stack for issues:
-- `IssueType` (TASK/BUG), `Status` (TODO/IN_PROGRESS/TESTING/DONE), `Priority`, `Severity` enums
-- `Issue` table per `docs/03-Architecture.md §2` — single table, `type` discriminator, `sprint_id` nullable (null = backlog), `deleted_at` soft delete, `number` + `project_id` unique → generates key like "DEV-42" via atomic `issue_counter` increment
-- `Sprint` table (PLANNED/ACTIVE/COMPLETED state, partial unique index one ACTIVE per project)
-- Activity log on every status transition (FR-6.2): `Activity` model, append-only
-- Schemas: `IssueCreate` (type-dependent validation: BUG requires severity), `IssueUpdate`, `IssueResponse`, `IssueListResponse`
-- Endpoints: `GET/POST /projects/{id}/issues` (with filter params: status, type, priority, assignee, sprint, q), `GET/PATCH/DELETE /issues/{id}`
-- Tests covering TC-ISS-01..05 from `docs/05-Test-Plan.md`
-- **Do not build Sprint endpoints yet** — just the model and FK (Sprint endpoints come in Sprint 4 of the project plan)
+### FR-4 Kanban board
+`GET /projects/{id}/board` — returns issues (not deleted) grouped into four status buckets: `{todo: [...], in_progress: [...], testing: [...], done: [...]}`. Filter by sprint_id optional. No new model needed; reuses `issue_repo.list_for_project`. New `BoardResponse` schema.
+
+### FR-6.1 Comments
+`Comment` model (`id, issue_id FK indexed, author_id FK, body text, created_at, edited_at nullable`). Alembic migration. Schemas: `CommentCreate`, `CommentUpdate`, `CommentResponse`. Repo: `comment_repo` (create, list_for_issue, get_by_id, update, delete). Service: `comment_service` — author can edit/delete own; Admin can delete any; @mention detection logs activity on the issue. Router: `GET/POST /issues/{id}/comments`, `PATCH/DELETE /comments/{id}`.
+
+### FR-8 Notifications (assignment + status-change)
+`Notification` model (`id, user_id FK indexed, type enum(ASSIGNED,STATUS_CHANGE,MENTION,DEADLINE), message, issue_id FK nullable, read bool default false, created_at`). Alembic migration. Service helper `notification_service.notify(db, user_id, type, message, issue_id)`. Call it from `issue_service.create_issue` (ASSIGNED when assignee set) and `issue_service.update_issue` (STATUS_CHANGE, ASSIGNED on assignee change). Router: `GET /notifications`, `POST /notifications/read` (body: `{ids: [...]}`).
+
+Tests to cover: board grouping, comment CRUD + author-only edit/delete, admin delete, notification created on assignment, mark-read.
+
