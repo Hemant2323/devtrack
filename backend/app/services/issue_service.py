@@ -9,8 +9,10 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models.issue import Issue, IssueType, Status
+from app.models.notification import NotifType
 from app.models.project import Project
 from app.repositories import activity_repo, issue_repo, project_repo
+from app.services import notification_service
 from app.schemas.issue import IssueCreate, IssueResponse, IssueUpdate
 
 
@@ -85,6 +87,14 @@ def create_issue(
     issue = issue_repo.create(db, project_id, number, caller_id, **fields)
 
     activity_repo.log(db, issue.id, caller_id, "created")
+
+    # Notify assignee on creation (FR-8.1)
+    if issue.assignee_id and issue.assignee_id != caller_id:
+        notification_service.notify(
+            db, issue.assignee_id, NotifType.ASSIGNED,
+            f"You were assigned {project.key}-{number}", issue.id
+        )
+
     db.commit()
     db.refresh(issue)
 
@@ -130,6 +140,21 @@ def update_issue(
         )
 
     issue_repo.update(db, issue, **changes)
+
+    # Notifications on update (FR-8.1)
+    if "status" in changes:
+        if issue.assignee_id and issue.assignee_id != caller_id:
+            notification_service.notify(
+                db, issue.assignee_id, NotifType.STATUS_CHANGE,
+                f"{project.key}-{issue.number} moved to {changes['status'].value}",
+                issue.id,
+            )
+    if "assignee_id" in changes and changes["assignee_id"] and changes["assignee_id"] != caller_id:
+        notification_service.notify(
+            db, changes["assignee_id"], NotifType.ASSIGNED,
+            f"You were assigned {project.key}-{issue.number}", issue.id,
+        )
+
     db.commit()
     db.refresh(issue)
     return _to_response(issue, project.key)
