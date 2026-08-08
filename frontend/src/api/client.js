@@ -1,7 +1,7 @@
 // Central API client — all fetch calls go through here.
 // This is the single place we attach the JWT header, handle 401s, etc.
 
-const BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8001";
+const BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
 
 function getToken() {
   return localStorage.getItem("access_token");
