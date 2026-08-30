@@ -7,7 +7,7 @@ from fastapi import HTTPException, status
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from app.models.project import Project, ProjectMember, Role
+from app.models.project import Project, Role
 from app.models.user import User
 from app.repositories import project_repo, user_repo
 from app.schemas.project import (

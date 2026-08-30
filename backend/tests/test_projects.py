@@ -1,7 +1,5 @@
 """Project tests — TC-PRJ-01..04 from docs/05-Test-Plan.md."""
 
-import pytest
-
 
 # ---------- helpers ----------
 

@@ -10,10 +10,9 @@ from sqlalchemy.orm import Session
 from app.core.deps import get_current_user
 from app.database import get_db
 from app.models.user import User
-from app.repositories import issue_repo, project_repo
+from app.repositories import issue_repo
 from app.services.issue_service import _get_project_member_or_404, _to_response
 from app.models.issue import Status
-from fastapi import HTTPException, status as http_status
 
 router = APIRouter(tags=["board"])
 

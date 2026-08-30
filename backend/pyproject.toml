@@ -1,0 +1,12 @@
+# Tooling configuration for the DevTrack backend.
+#
+# Ruff's default rule set widens between releases; pinning an explicit
+# selection here keeps the lint gate reproducible, so CI fails on real
+# defects rather than on newly-introduced default rules.
+#
+# E4 = imports · E7 = statement style · E9 = syntax/IO errors · F = pyflakes
+# (unused imports/variables, undefined names). This is the set the codebase
+# was written against.
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]

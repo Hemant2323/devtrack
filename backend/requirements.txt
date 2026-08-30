@@ -17,3 +17,6 @@ email-validator==2.2.0     # lets Pydantic validate EmailStr fields
 # --- Testing ---
 pytest==8.3.5              # test runner
 httpx==0.28.1              # HTTP client used by FastAPI's TestClient
+
+# --- Linting ---
+ruff==0.16.5               # lint gate; CI runs `ruff check app/ tests/`

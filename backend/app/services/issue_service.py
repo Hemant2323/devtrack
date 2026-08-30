@@ -5,10 +5,9 @@ transaction, so they're atomic — either both succeed or both roll back.
 """
 
 from fastapi import HTTPException, status
-from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.models.issue import Issue, IssueType, Status
+from app.models.issue import Issue
 from app.models.notification import NotifType
 from app.models.project import Project
 from app.repositories import activity_repo, issue_repo, project_repo

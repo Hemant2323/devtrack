@@ -10,7 +10,7 @@
 **Sprint:** 2 complete ✅  
 **Next:** Sprint 3 — Frontend Sprint 2 (Kanban board UI, issue detail, comments, notifications)  
 **Tests:** 46/46 passing  
-**Backend port:** 8000 (default) — `client.js` currently points to 8001; align before Sprint 3 frontend work  
+**Backend port:** 8000 — `client.js` points to 8000; the earlier 8001 mismatch was resolved in `5b48639`
 
 ---
 
@@ -179,7 +179,6 @@ GET /health
 
 ## Known Issues / Technical Debt
 
-1. **Port mismatch:** `frontend/src/api/client.js` uses `http://localhost:8001`; backend defaults to 8000. Fix before Sprint 3.
-2. **Sprint model has no endpoints yet** — `sprints` table exists, no service or router.
-3. **No TanStack Query yet** — `ProjectsPage` uses raw `useEffect`/`fetch`; introduce TQ from Sprint 3.
-4. **No `ANTHROPIC_API_KEY` yet** — placeholder; needed only for Sprint 6 AI triage.
+1. **Sprint model has no endpoints yet** — `sprints` table exists, no service or router.
+2. **No TanStack Query yet** — `ProjectsPage` uses raw `useEffect`/`fetch`; introduce TQ from Sprint 3.
+3. **No `ANTHROPIC_API_KEY` yet** — placeholder; needed only for Sprint 6 AI triage.

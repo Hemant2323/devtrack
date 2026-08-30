@@ -4,12 +4,10 @@ import enum
 from datetime import date, datetime, timezone
 
 from sqlalchemy import (
-    Boolean,
     Date,
     DateTime,
     Enum,
     ForeignKey,
-    Index,
     Integer,
     String,
     Text,

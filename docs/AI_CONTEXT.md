@@ -120,7 +120,8 @@ npm run build
 ## Environment Variables (`backend/.env.example`)
 - `DATABASE_URL` — SQLite path or PostgreSQL URL
 - `JWT_SECRET` — random secret for signing tokens
-- `CORS_ORIGINS` — comma-separated allowed origins
+- `CORS_ORIGINS` — allowed origins as a **JSON list**, e.g. `["http://localhost:5173"]`
+  (parsed by pydantic-settings as `list[str]`; a comma-separated value fails to parse at startup)
 - `ANTHROPIC_API_KEY` — needed only for Sprint 6 AI triage
 
 ---
@@ -146,4 +147,10 @@ The `client` fixture (conftest.py) spins up a fresh in-memory SQLite DB per test
 
 ## Port Note
 
-`frontend/src/api/client.js` currently has `BASE_URL = http://localhost:8001`. The backend runs on 8000 by default. Align these before running the full stack locally.
+Ports are aligned — **no action needed**. `frontend/src/api/client.js` uses
+`http://localhost:8000` (overridable via `VITE_API_URL`), and the backend runs on
+8000. An earlier 8000/8001 mismatch was resolved in commit `5b48639`.
+
+Start the backend with `--port 8000` and the frontend on 5173 (pinned via
+`strictPort` in `vite.config.js`) — the backend's CORS allowlist contains only
+`http://localhost:5173`, so a different frontend port is rejected by the browser.
