@@ -170,6 +170,11 @@ def update_issue(
 def delete_issue(db: Session, issue_id: int, caller_id: int) -> None:
     """Soft-delete: only Admins may delete (FR-3.5)."""
     issue = _get_issue_or_404(db, issue_id, caller_id)
+
+    project = project_repo.get_by_id(db, issue.project_id)
+    if project.archived:
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "Project is archived")
+
     member = project_repo.get_member(db, issue.project_id, caller_id)
     from app.models.project import Role
     if member.role != Role.ADMIN:

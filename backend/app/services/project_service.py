@@ -124,8 +124,9 @@ def add_member(db: Session, project_id: int, data: MemberAdd, caller: User) -> M
 def update_member(
     db: Session, project_id: int, member_user_id: int, data: MemberUpdate, caller: User
 ) -> MemberResponse:
-    _get_project_or_404(db, project_id, caller)
+    project = _get_project_or_404(db, project_id, caller)
     _require_admin(db, project_id, caller)
+    _require_not_archived(project)
     member = project_repo.get_member(db, project_id, member_user_id)
     if member is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Member not found")
@@ -143,8 +144,9 @@ def update_member(
 def remove_member(
     db: Session, project_id: int, member_user_id: int, caller: User
 ) -> None:
-    _get_project_or_404(db, project_id, caller)
+    project = _get_project_or_404(db, project_id, caller)
     _require_admin(db, project_id, caller)
+    _require_not_archived(project)
     member = project_repo.get_member(db, project_id, member_user_id)
     if member is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Member not found")

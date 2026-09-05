@@ -18,6 +18,12 @@ def _get_issue_or_404(db, issue_id, caller_id):
     return issue
 
 
+def _require_not_archived(db, issue) -> None:
+    project = project_repo.get_by_id(db, issue.project_id)
+    if project.archived:
+        raise HTTPException(status.HTTP_403_FORBIDDEN, "Project is archived")
+
+
 def list_comments(db: Session, issue_id: int, caller_id: int):
     _get_issue_or_404(db, issue_id, caller_id)
     return comment_repo.list_for_issue(db, issue_id)
@@ -51,6 +57,10 @@ def update_comment(db: Session, comment_id: int, body: str, caller_id: int):
     comment = comment_repo.get_by_id(db, comment_id)
     if comment is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Comment not found")
+    # Resolve through the issue so a non-member gets 404 rather than a 403 that
+    # would confirm the comment exists, and so an archived project is refused.
+    issue = _get_issue_or_404(db, comment.issue_id, caller_id)
+    _require_not_archived(db, issue)
     # Only the author can edit (FR-6.1)
     if comment.author_id != caller_id:
         raise HTTPException(status.HTTP_403_FORBIDDEN, "Only the author can edit this comment")
@@ -65,7 +75,8 @@ def delete_comment(db: Session, comment_id: int, caller_id: int) -> None:
     if comment is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Comment not found")
 
-    issue = get_issue(db, comment.issue_id)
+    issue = _get_issue_or_404(db, comment.issue_id, caller_id)
+    _require_not_archived(db, issue)
     member = project_repo.get_member(db, issue.project_id, caller_id)
 
     from app.models.project import Role
