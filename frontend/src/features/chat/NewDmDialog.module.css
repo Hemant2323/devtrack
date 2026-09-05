@@ -1,0 +1,53 @@
+/* Member picker inside the shared Dialog. */
+
+.list {
+  margin-top: var(--sp-5);
+  max-height: 46vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+  width: 100%;
+  padding: var(--sp-4);
+  border-radius: var(--radius-sm);
+  text-align: left;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.person:hover { background: var(--surface-hover); }
+.person:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
+
+.personBody { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.personName {
+  font-size: var(--fs-13);
+  font-weight: var(--fw-semibold);
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.personMeta {
+  font-size: var(--fs-12);
+  color: var(--text-subtle);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.personWhen {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-subtle);
+}
+
+.note {
+  padding: var(--sp-5) var(--sp-4);
+  font-size: var(--fs-12);
+  color: var(--text-subtle);
+  line-height: 1.5;
+}

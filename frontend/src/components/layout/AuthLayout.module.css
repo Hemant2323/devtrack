@@ -1,0 +1,172 @@
+/* Split-screen authentication. Deliberately not a centered card:
+   the ink panel carries the brand and the form gets a full column. */
+
+.split {
+  display: grid;
+  grid-template-columns: 44fr 56fr;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--n-0);
+}
+
+/* ------------------------------------------------------------- ink panel */
+.panel {
+  position: relative;
+  background: var(--ink-900);
+  color: var(--ink-text);
+  padding: var(--sp-11) 56px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.panel::after {
+  content: "";
+  position: absolute;
+  left: -20%;
+  bottom: -24%;
+  width: 680px;
+  height: 520px;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(59, 79, 224, 0.3),
+    rgba(59, 79, 224, 0) 66%
+  );
+}
+
+.brand {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  color: var(--ink-text);
+  align-self: flex-start;
+}
+.brand:hover { text-decoration: none; }
+.brandWord { font-size: var(--fs-16); font-weight: var(--fw-bold); letter-spacing: -0.025em; }
+
+.panelBody {
+  position: relative;
+  z-index: 2;
+  margin: auto 0;
+  max-width: 44ch;
+}
+.panelBody h2 {
+  font-size: 38px;
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.032em;
+  line-height: 1.14;
+}
+.panelSub {
+  margin-top: var(--sp-6);
+  color: var(--ink-dim);
+  font-size: var(--fs-16);
+  line-height: 1.65;
+}
+
+.quote {
+  position: relative;
+  z-index: 2;
+  border-left: 2px solid var(--accent-on-ink);
+  padding-left: var(--sp-6);
+  margin-top: var(--sp-10);
+  max-width: 44ch;
+}
+.quote p { font-size: var(--fs-14); line-height: 1.6; color: var(--ink-text); }
+.quote span {
+  display: block;
+  margin-top: var(--sp-4);
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--ink-faint);
+  letter-spacing: 0.05em;
+}
+
+.panelFoot {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--ink-faint);
+}
+
+/* ----------------------------------------------------------- form column */
+.formCol {
+  background: var(--n-0);
+  padding: var(--sp-11) 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.form {
+  width: 100%;
+  max-width: 400px;
+  animation: dt-rise-in var(--dur-slow) var(--ease-out);
+}
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--n-500);
+}
+.form h1 {
+  margin: var(--sp-5) 0 var(--sp-3);
+  font-size: 30px;
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.03em;
+  color: var(--n-900);
+}
+.hint { color: var(--n-600); font-size: var(--fs-14); margin-bottom: var(--sp-9); }
+
+.fields { display: flex; flex-direction: column; gap: var(--sp-6); }
+
+/* Form-level failures (bad credentials, duplicate email) sit above the button;
+   field-level ones are rendered by the Input primitive next to their input. */
+.formError {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  margin-top: var(--sp-6);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-13);
+  line-height: 1.45;
+  animation: dt-rise-in var(--dur-fast) var(--ease-out);
+}
+.formError svg { flex: none; margin-top: 2px; }
+
+.submit { margin-top: var(--sp-7); height: 42px; font-size: var(--fs-14); }
+
+.alt {
+  margin-top: var(--sp-8);
+  padding-top: var(--sp-8);
+  border-top: 1px solid var(--n-200);
+  font-size: var(--fs-13);
+  color: var(--n-600);
+}
+.alt a { font-weight: var(--fw-semibold); color: var(--a-600); }
+
+/* Inputs on the auth screens are larger than app controls — a focused,
+   single-task screen, not a dense workspace. */
+.form input { height: 42px; }
+
+@media (max-width: 820px) {
+  .split { grid-template-columns: 1fr; min-height: 0; }
+  .panel { padding: var(--sp-9) var(--sp-9); }
+  .panelBody { margin: var(--sp-9) 0; }
+  .panelBody h2 { font-size: 28px; }
+  .quote { display: none; }
+  .panelFoot { display: none; }
+  .formCol { padding: var(--sp-9); }
+}
+
+@media (max-width: 480px) {
+  .panel { padding: var(--sp-7) var(--sp-7); }
+  .formCol { padding: var(--sp-8) var(--sp-7); }
+  .panelBody h2 { font-size: var(--fs-24); }
+}

@@ -1,0 +1,94 @@
+/* The workspace ground is tinted; content sits on white surfaces above it.
+   That figure/ground separation is what stops the page reading as a form. */
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-5) var(--sp-8);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.search { width: 280px; flex: none; }
+/* The Input primitive renders a wrapper; keep its field flush with the row. */
+.search input { height: 30px; }
+
+.filter {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  height: 30px;
+  padding: 0 var(--sp-4);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-medium);
+  color: var(--text-secondary);
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+.filter:hover { border-color: var(--text-disabled); background: var(--surface-hover); color: var(--text); }
+.filter[data-state="open"] { border-color: var(--accent); color: var(--text-accent); }
+.filterActive {
+  border-color: var(--accent);
+  background: var(--accent-subtle);
+  color: var(--text-accent);
+}
+
+.spacer { margin-left: auto; }
+
+.count {
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--text-subtle);
+  letter-spacing: 0.04em;
+}
+
+/* ------------------------------------------------------------------ body */
+.body { padding: var(--sp-8); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--sp-6);
+}
+
+.list { display: flex; flex-direction: column; gap: var(--sp-3); }
+
+/* Cards stagger in on first paint. Capped so a long list never crawls. */
+.enter {
+  height: 100%;
+  animation: dt-rise-in var(--dur-slow) var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 35ms);
+}
+/* The card fills its grid cell so a row of cards shares one height. */
+.enter > * { height: 100%; }
+@media (prefers-reduced-motion: reduce) {
+  .enter { animation: none; }
+}
+
+.skeletonCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+.skeletonHead { display: flex; gap: var(--sp-5); align-items: center; }
+
+@media (max-width: 767px) {
+  .toolbar { padding: var(--sp-4) var(--sp-5); }
+  .search { width: 100%; order: -1; }
+  .body { padding: var(--sp-5); }
+  .grid { grid-template-columns: 1fr; gap: var(--sp-5); }
+}

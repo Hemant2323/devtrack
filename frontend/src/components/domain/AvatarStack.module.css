@@ -1,0 +1,27 @@
+.stack { display: flex; align-items: center; }
+
+/* Overlapped avatars with a ring in the surface colour, so they read as a
+   group rather than a row of circles. */
+.stack > * {
+  margin-left: -6px;
+  box-shadow: 0 0 0 2px var(--surface);
+  border-color: transparent;
+}
+.stack > *:first-child { margin-left: 0; }
+
+.more {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--surface-active);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  font-weight: var(--fw-semibold);
+  margin-left: -6px;
+  box-shadow: 0 0 0 2px var(--surface);
+}
+
+.skeleton { display: flex; gap: var(--sp-2); }

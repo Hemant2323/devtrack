@@ -1,0 +1,57 @@
+.form { display: flex; flex-direction: column; gap: var(--sp-6); }
+
+/* Name and key sit on one row: the key is derived from the name, and seeing
+   them together makes that relationship obvious. */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 140px;
+  gap: var(--sp-5);
+  align-items: start;
+}
+
+/* Live preview of what issue keys will look like — the single most useful
+   thing to show while choosing a key, because the choice is permanent. */
+.preview {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--surface-inset);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+.previewLabel {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-subtle);
+}
+.previewKey {
+  font-family: var(--font-mono);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  color: var(--accent-contrast);
+  background: var(--accent);
+  border-radius: var(--radius-xs);
+  padding: 2px var(--sp-4);
+}
+.previewKeyEmpty { background: var(--n-400); }
+.previewHint { font-size: var(--fs-12); color: var(--text-subtle); margin-left: auto; }
+
+.formError {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-13);
+  line-height: 1.45;
+}
+.formError svg { flex: none; margin-top: 2px; }
+
+@media (max-width: 520px) {
+  .split { grid-template-columns: 1fr; }
+}

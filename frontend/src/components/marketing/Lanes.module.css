@@ -1,0 +1,35 @@
+/* The lane motif: the visible path work takes through the system.
+   Structural, not ornamental — it appears only on ink surfaces and always
+   reads as the same device. */
+.lanes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.lane {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--ink-line);
+}
+
+.lane::after {
+  content: "";
+  position: absolute;
+  top: -2.5px;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--accent-on-ink);
+  opacity: 0.6;
+}
+
+.lane:nth-child(1) { top: 24%; }
+.lane:nth-child(1)::after { left: 17%; }
+.lane:nth-child(2) { top: 52%; }
+.lane:nth-child(2)::after { left: 64%; background: var(--signal); }
+.lane:nth-child(3) { top: 78%; }
+.lane:nth-child(3)::after { left: 37%; }

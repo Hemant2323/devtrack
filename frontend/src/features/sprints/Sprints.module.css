@@ -1,0 +1,86 @@
+/* Sprint dialogs + report. Same tokens and rhythm as the issue dialogs. */
+
+.form { display: flex; flex-direction: column; gap: var(--sp-6); }
+.dateRow { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-5); }
+
+.formError {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-13);
+  line-height: 1.45;
+}
+.formError svg { flex: none; margin-top: 2px; }
+
+/* ---------------------------------------------------------------- report */
+.reportRate {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-4);
+  padding-bottom: var(--sp-6);
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: var(--sp-6);
+}
+.reportRateValue {
+  font-size: var(--fs-32);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.03em;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.reportRateLabel { font-size: var(--fs-13); color: var(--text-secondary); }
+
+.reportGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); }
+.reportStat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--sp-5);
+  background: var(--surface-inset);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-subtle);
+}
+.reportStatValue {
+  font-size: var(--fs-20);
+  font-weight: var(--fw-bold);
+  color: var(--text);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.reportStatLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.reportNote {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-top: var(--sp-6);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--info-bg);
+  color: var(--info-fg);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-12);
+  line-height: 1.5;
+}
+.reportNote svg { flex: none; }
+
+.reportFootnote {
+  margin-top: var(--sp-5);
+  font-size: var(--fs-11);
+  color: var(--text-subtle);
+  line-height: 1.5;
+}
+
+@media (max-width: 520px) {
+  .dateRow { grid-template-columns: 1fr; }
+  .reportGrid { grid-template-columns: 1fr; }
+}

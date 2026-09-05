@@ -1,0 +1,31 @@
+.page {
+  min-height: 60vh;
+  display: grid;
+  place-items: center;
+  padding: var(--sp-9) var(--sp-6);
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-5);
+  text-align: center;
+  animation: dt-rise-in var(--dur-slow) var(--ease-out);
+}
+
+.code {
+  font-family: var(--font-mono);
+  font-size: var(--fs-32);
+  font-weight: var(--fw-bold);
+  color: var(--text-disabled);
+  letter-spacing: -0.03em;
+}
+
+.title { font-size: var(--fs-16); font-weight: var(--fw-semibold); }
+
+.description {
+  font-size: var(--fs-13);
+  color: var(--text-secondary);
+  max-width: 44ch;
+}

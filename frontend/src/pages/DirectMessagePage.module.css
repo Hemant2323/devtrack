@@ -1,0 +1,83 @@
+/* Direct message page chrome.
+   The transcript and composer come from features/chat/MessageThread.module.css,
+   shared with team chat; only the header differs, because a DM has a person at
+   the top of it rather than a room. */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: var(--sp-5) var(--sp-8);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+  flex: none;
+}
+.headerText { min-width: 0; flex: 1; }
+.crumb {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-subtle);
+}
+.title {
+  margin-top: 2px;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.02em;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.subtitle {
+  font-size: var(--fs-12);
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.private {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-full);
+  background: var(--surface-active);
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--text-subtle);
+}
+
+.centered {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+  padding: var(--sp-8);
+  text-align: center;
+}
+.goneTitle { font-size: var(--fs-14); font-weight: var(--fw-semibold); color: var(--text); }
+.goneBody {
+  max-width: 42ch;
+  font-size: var(--fs-13);
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 767px) {
+  .header { padding: var(--sp-4) var(--sp-5); }
+  .title { font-size: var(--fs-16); }
+  .subtitle, .private { display: none; }
+}

@@ -26,7 +26,7 @@ def list_for_project(
     assignee_id: int | None = None,
     sprint_id: int | None = None,
     q: str | None = None,
-    include_backlog: bool = True,
+    in_backlog: bool | None = None,
 ) -> list[Issue]:
     stmt = (
         select(Issue)
@@ -43,7 +43,14 @@ def list_for_project(
         stmt = stmt.where(Issue.assignee_id == assignee_id)
     if sprint_id is not None:
         stmt = stmt.where(Issue.sprint_id == sprint_id)
-    if not include_backlog:
+    # Backlog is modelled as "no sprint" on the Issue itself, so this filter
+    # reuses sprint_id rather than adding a competing mechanism.
+    #   True  -> only backlog issues        (sprint_id IS NULL)
+    #   False -> only issues in some sprint (sprint_id IS NOT NULL)
+    #   None  -> no backlog filter
+    if in_backlog is True:
+        stmt = stmt.where(Issue.sprint_id.is_(None))
+    elif in_backlog is False:
         stmt = stmt.where(Issue.sprint_id.is_not(None))
     if q:
         pattern = f"%{q}%"

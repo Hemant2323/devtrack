@@ -1,0 +1,45 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  height: 20px;
+  padding: 0 var(--sp-3);
+  border-radius: var(--radius-xs);
+  font-size: var(--fs-11);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.neutral { background: var(--surface-active); color: var(--text-secondary); }
+.accent  { background: var(--accent-subtle); color: var(--text-accent); }
+.success { background: var(--success-bg); color: var(--success-fg); }
+.warning { background: var(--warning-bg); color: var(--warning-fg); }
+.danger  { background: var(--danger-bg);  color: var(--danger-fg); }
+.info    { background: var(--info-bg);    color: var(--info-fg); }
+
+/* Outline reads as metadata rather than state — used for roles and counts. */
+.outline {
+  background: transparent;
+  border-color: var(--border-strong);
+  color: var(--text-secondary);
+}
+
+.count {
+  text-transform: none;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono);
+  min-width: 20px;
+  justify-content: center;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: currentColor;
+  flex: none;
+}

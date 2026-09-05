@@ -11,7 +11,7 @@ from app.models.issue import Issue
 from app.models.notification import NotifType
 from app.models.project import Project
 from app.repositories import activity_repo, issue_repo, project_repo
-from app.services import notification_service
+from app.services import notification_service, sprint_service
 from app.schemas.issue import IssueCreate, IssueResponse, IssueUpdate
 
 
@@ -81,6 +81,9 @@ def create_issue(
     if project.archived:
         raise HTTPException(status.HTTP_403_FORBIDDEN, "Project is archived")
 
+    # FR-5.2: an issue may only join a live sprint of its own project.
+    sprint_service.validate_assignable(db, project_id, data.sprint_id)
+
     number = _next_number(db, project)
     fields = data.model_dump(exclude_none=False)
     issue = issue_repo.create(db, project_id, number, caller_id, **fields)
@@ -118,6 +121,11 @@ def update_issue(
     changes = data.model_dump(exclude_unset=True)
     if not changes:
         return _to_response(issue, project.key)
+
+    # Moving an issue between backlog and sprint goes through the ordinary
+    # PATCH (FR-5.2) — validate the target the same way create does.
+    if "sprint_id" in changes:
+        sprint_service.validate_assignable(db, issue.project_id, changes["sprint_id"])
 
     def _str(v):
         """Return the plain string for a value, using .value for enums."""

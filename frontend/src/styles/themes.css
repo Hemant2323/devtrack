@@ -1,0 +1,155 @@
+/* =============================================================================
+   DevTrack themes
+   -----------------------------------------------------------------------------
+   Dark mode redefines SEMANTIC tokens only — never component rules. Adding a
+   component never requires touching this file.
+
+   Resolution order (last match wins):
+     1. tokens.css :root            → light (the default experience)
+     2. prefers-color-scheme: dark  → dark, unless the user explicitly chose light
+     3. [data-theme="dark"|"light"] → explicit choice always wins
+
+   Elevation inverts between themes: light lifts a surface with shadow, dark
+   lifts it by making it lighter. Shadows in dark mode read as depth, not lift.
+   ========================================================================== */
+
+
+/* --- the dark palette, defined once and referenced by both selectors below --- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --surface-sunken:  #0c0e14;
+    --surface-page:    #101319;
+    --surface:         #161a22;
+    --surface-raised:  #1c212b;
+    --surface-overlay: #222834;
+    --surface-hover:   #212734;
+    --surface-active:  #29303f;
+    --surface-selected: #1e2440;
+    --surface-inset:   #0f121a;
+
+    --text:           #e8eaf0;
+    --text-secondary: #a3abbd;
+    --text-subtle:    #7b8496;
+    --text-disabled:  #5a6376;
+    --text-inverse:   #10131a;
+    --text-accent:    #a3adf6;
+
+    --border:        #272d3a;
+    --border-strong: #39414f;
+    --border-subtle: #1e2430;
+    --border-accent: #5a63e4;
+
+    --accent:          #5a63e4;
+    --accent-hover:    #6e77ea;
+    --accent-active:   #7d87ef;
+    --accent-subtle:   #1b2040;
+    --accent-contrast: #ffffff;
+
+    --focus-ring: #7d87ef;
+
+    --status-todo-fg:     #a3abbd;  --status-todo-bg:     #262c39;
+    --status-progress-fg: #8ab0ee;  --status-progress-bg: #16233a;
+    --status-testing-fg:  #e0ab63;  --status-testing-bg:  #33260f;
+    --status-done-fg:     #6ec593;  --status-done-bg:     #102c1d;
+
+    --priority-low:      #7b8496;
+    --priority-medium:   #8ab0ee;
+    --priority-high:     #e08a5a;
+    --priority-critical: #ee8080;
+
+    --severity-minor:    #a3abbd;
+    --severity-major:    #e0ab63;
+    --severity-critical: #ee8080;
+    --severity-blocker:  #d45c5c;
+
+    --success-fg: #6ec593; --success-bg: #102c1d;
+    --warning-fg: #e0ab63; --warning-bg: #33260f;
+    --danger-fg:  #ee8080; --danger-bg:  #351617;
+    --info-fg:    #8ab0ee; --info-bg:    #16233a;
+
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.30);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.40), 0 1px 2px rgba(0, 0, 0, 0.30);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.46), 0 1px 3px rgba(0, 0, 0, 0.32);
+    --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.56), 0 4px 8px rgba(0, 0, 0, 0.34);
+    --shadow-drag: 0 8px 20px rgba(0, 0, 0, 0.60);
+
+    --tooltip-bg: #29303f;
+    --tooltip-fg: #e8eaf0;
+    --tooltip-border: #39414f;
+
+    --scrim: rgba(0, 0, 0, 0.62);
+  }
+}
+
+/* Explicit dark selection — wins over a light OS preference. */
+:root[data-theme="dark"] {
+  --surface-sunken:  #0c0e14;
+  --surface-page:    #101319;
+  --surface:         #161a22;
+  --surface-raised:  #1c212b;
+  --surface-overlay: #222834;
+  --surface-hover:   #212734;
+  --surface-active:  #29303f;
+  --surface-selected: #1e2440;
+  --surface-inset:   #0f121a;
+
+  --text:           #e8eaf0;
+  --text-secondary: #a3abbd;
+  --text-subtle:    #7b8496;
+  --text-disabled:  #5a6376;
+  --text-inverse:   #10131a;
+  --text-accent:    #a3adf6;
+
+  --border:        #272d3a;
+  --border-strong: #39414f;
+  --border-subtle: #1e2430;
+  --border-accent: #5a63e4;
+
+  --accent:          #5a63e4;
+  --accent-hover:    #6e77ea;
+  --accent-active:   #7d87ef;
+  --accent-subtle:   #1b2040;
+  --accent-contrast: #ffffff;
+
+  --focus-ring: #7d87ef;
+
+  --status-todo-fg:     #a3abbd;  --status-todo-bg:     #262c39;
+  --status-progress-fg: #8ab0ee;  --status-progress-bg: #16233a;
+  --status-testing-fg:  #e0ab63;  --status-testing-bg:  #33260f;
+  --status-done-fg:     #6ec593;  --status-done-bg:     #102c1d;
+
+  --priority-low:      #7b8496;
+  --priority-medium:   #8ab0ee;
+  --priority-high:     #e08a5a;
+  --priority-critical: #ee8080;
+
+  --severity-minor:    #a3abbd;
+  --severity-major:    #e0ab63;
+  --severity-critical: #ee8080;
+  --severity-blocker:  #d45c5c;
+
+  --success-fg: #6ec593; --success-bg: #102c1d;
+  --warning-fg: #e0ab63; --warning-bg: #33260f;
+  --danger-fg:  #ee8080; --danger-bg:  #351617;
+  --info-fg:    #8ab0ee; --info-bg:    #16233a;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.30);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.40), 0 1px 2px rgba(0, 0, 0, 0.30);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.46), 0 1px 3px rgba(0, 0, 0, 0.32);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.56), 0 4px 8px rgba(0, 0, 0, 0.34);
+  --shadow-drag: 0 8px 20px rgba(0, 0, 0, 0.60);
+
+  --tooltip-bg: #29303f;
+  --tooltip-fg: #e8eaf0;
+  --tooltip-border: #39414f;
+
+  --scrim: rgba(0, 0, 0, 0.62);
+}
+
+/* Let native controls (scrollbars, form widgets, autofill) match the theme. */
+:root { color-scheme: light; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { color-scheme: dark; }
+}
+:root[data-theme="dark"]  { color-scheme: dark; }
+:root[data-theme="light"] { color-scheme: light; }

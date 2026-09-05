@@ -1,0 +1,20 @@
+.skeleton {
+  display: block;
+  border-radius: var(--radius-xs);
+  background: linear-gradient(
+    90deg,
+    var(--surface-active) 0%,
+    var(--surface-hover) 40%,
+    var(--surface-active) 80%
+  );
+  background-size: 200% 100%;
+  animation: dt-shimmer 1.4s ease-in-out infinite;
+}
+
+/* A static block is calmer than a shimmering one when motion is unwelcome. */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton { animation: none; background: var(--surface-active); }
+}
+
+.text { height: 12px; }
+.stack { display: flex; flex-direction: column; gap: var(--sp-4); }

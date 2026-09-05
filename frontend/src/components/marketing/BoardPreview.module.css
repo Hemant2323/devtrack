@@ -1,0 +1,122 @@
+/* The hero's product preview: a real DevTrack board rendered in markup, not a
+   screenshot. Same atoms as the live app, so it can never drift out of date. */
+
+.frame {
+  position: relative;
+  perspective: 1800px;
+}
+
+.inner {
+  transform: rotateY(-11deg) rotateX(3.5deg);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--n-0);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 40px 84px -22px rgba(0, 0, 0, 0.62),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  transition: transform 700ms var(--ease-out);
+}
+.frame:hover .inner { transform: rotateY(-6deg) rotateX(2deg); }
+
+.chrome {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  height: 32px;
+  padding: 0 var(--sp-5);
+  background: var(--n-100);
+  border-bottom: 1px solid var(--n-200);
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--n-300);
+}
+.chromeTitle {
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--n-500);
+  margin-left: var(--sp-2);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-4);
+  padding: var(--sp-5);
+  background: var(--n-100);
+}
+
+.column {
+  background: var(--n-0);
+  border: 1px solid var(--n-200);
+  border-radius: var(--radius-md);
+  padding: var(--sp-4);
+  min-height: 200px;
+}
+
+.columnHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-4);
+}
+.columnName {
+  font-size: var(--fs-11);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--n-600);
+}
+.columnCount {
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--n-500);
+  background: var(--n-100);
+  border-radius: var(--radius-xs);
+  padding: 1px var(--sp-3);
+}
+
+.card {
+  background: var(--n-0);
+  border: 1px solid var(--n-200);
+  border-radius: var(--radius-sm);
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-3);
+  box-shadow: 0 1px 2px rgba(20, 26, 38, 0.05);
+}
+.cardTitle {
+  font-size: var(--fs-11);
+  line-height: 1.36;
+  font-weight: var(--fw-medium);
+  color: var(--n-900);
+  margin-bottom: var(--sp-3);
+}
+.cardMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.cardMeta .spacer { margin-left: auto; }
+
+/* One card loops between columns — the product demonstrating itself. */
+.moving { animation: cardHop 5s var(--ease-out) infinite; }
+@keyframes cardHop {
+  0%, 62% { transform: none; box-shadow: 0 1px 2px rgba(20, 26, 38, 0.05); }
+  70% {
+    transform: translate(10px, -7px) rotate(1.4deg);
+    box-shadow: 0 10px 20px rgba(20, 26, 38, 0.2);
+  }
+  80%, 100% { transform: none; box-shadow: 0 1px 2px rgba(20, 26, 38, 0.05); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moving { animation: none; }
+}
+
+@media (max-width: 1080px) {
+  .inner { transform: none; }
+  .frame:hover .inner { transform: none; }
+}

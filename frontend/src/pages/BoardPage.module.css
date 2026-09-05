@@ -1,0 +1,293 @@
+/* Kanban board.
+   Columns are sunken wells and cards are raised above them — the elevation
+   pairing established by the design system, and what stops the board reading
+   as four flat white boxes. */
+
+.board {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(272px, 1fr);
+  gap: var(--sp-5);
+  padding: var(--sp-8);
+  align-items: start;
+}
+
+.column {
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  min-height: 320px;
+  transition:
+    background-color var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
+}
+
+/* Active drop target. Colour is not the only signal — the border also
+   thickens into a dashed edge. */
+.columnOver {
+  background: var(--accent-subtle);
+  border-color: var(--accent);
+  border-style: dashed;
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.columnHead {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-5) var(--sp-5) var(--sp-4);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--col-color);
+  flex: none;
+}
+
+.columnName {
+  font-size: var(--fs-11);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.columnCount {
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--text-subtle);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  padding: 0 var(--sp-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.columnAdd {
+  margin-left: auto;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-xs);
+  color: var(--text-subtle);
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.columnAdd:hover { background: var(--surface); color: var(--text); }
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: 0 var(--sp-4) var(--sp-4);
+  flex: 1;
+}
+
+.columnEmpty {
+  padding: var(--sp-7) var(--sp-5);
+  text-align: center;
+  font-size: var(--fs-12);
+  color: var(--text-disabled);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  margin: 0 var(--sp-4) var(--sp-4);
+}
+
+/* ------------------------------------------------------------------ card */
+.card {
+  position: relative;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--sp-4);
+  box-shadow: var(--shadow-xs);
+  cursor: grab;
+  transition:
+    box-shadow var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+}
+.card:hover { box-shadow: var(--shadow-sm); border-color: var(--border-strong); }
+.card:active { cursor: grabbing; }
+
+/* The card being dragged fades in place; the drag image is the real card. */
+.cardDragging { opacity: 0.4; transform: scale(0.98); }
+
+/* An in-flight status change: the card is inert until the server answers. */
+.cardPending { opacity: 0.6; pointer-events: none; }
+
+.cardTop { display: flex; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-3); }
+
+.cardKey { text-decoration: none; }
+.cardKey:hover { text-decoration: none; }
+
+.cardMenu { margin-left: auto; }
+.menuButton {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-xs);
+  color: var(--text-subtle);
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+.card:hover .menuButton,
+.menuButton:focus-visible,
+.menuButton[data-state="open"] { opacity: 1; }
+.menuButton:hover { background: var(--surface-hover); color: var(--text); }
+/* Touch has no hover, and the menu is the only way to move a card there. */
+@media (hover: none) { .menuButton { opacity: 1; } }
+
+.cardTitle {
+  display: block;
+  font-size: var(--fs-13);
+  line-height: 1.42;
+  font-weight: var(--fw-medium);
+  color: var(--text);
+  text-decoration: none;
+  margin-bottom: var(--sp-4);
+  overflow-wrap: anywhere;
+}
+.cardTitle:hover { color: var(--text-accent); text-decoration: none; }
+.cardTitle:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; border-radius: var(--radius-xs); }
+
+.cardFoot { display: flex; align-items: center; gap: var(--sp-3); }
+.cardComponent {
+  font-size: var(--fs-11);
+  color: var(--text-subtle);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 96px;
+}
+.cardSpacer { margin-left: auto; display: flex; align-items: center; gap: var(--sp-3); }
+.unassigned { color: var(--text-disabled); font-size: var(--fs-12); }
+
+/* --------------------------------------------------------------- messages */
+.errorBar {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  margin: var(--sp-6) var(--sp-8) 0;
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-13);
+  animation: dt-rise-in var(--dur-fast) var(--ease-out);
+}
+.errorBar svg { flex: none; margin-top: 2px; }
+.errorDismiss {
+  margin-left: auto;
+  color: inherit;
+  opacity: 0.7;
+  padding: 0 var(--sp-3);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+}
+.errorDismiss:hover { opacity: 1; }
+
+.archivedNote {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-8);
+  background: var(--warning-bg);
+  color: var(--warning-fg);
+  border-bottom: 1px solid var(--border);
+  font-size: var(--fs-13);
+}
+
+.hint {
+  padding: 0 var(--sp-8);
+  margin-top: var(--sp-6);
+  font-size: var(--fs-12);
+  color: var(--text-subtle);
+}
+
+.emptyWrap { padding: var(--sp-9) var(--sp-8); }
+
+.skelCard {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+/* ------------------------------------------------------------- responsive */
+@media (max-width: 1100px) {
+  /* Horizontal board scroll rather than four crushed columns. The AppShell
+     <main> keeps the vertical scroll; this adds only the horizontal axis. */
+  .board {
+    grid-auto-columns: 264px;
+    overflow-x: auto;
+    padding: var(--sp-6) var(--sp-5);
+    scroll-snap-type: x proximity;
+  }
+  .column { scroll-snap-align: start; }
+}
+
+@media (max-width: 767px) {
+  .board {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    overflow-x: visible;
+    gap: var(--sp-5);
+    padding: var(--sp-5);
+  }
+  .column { min-height: 0; }
+  .errorBar, .hint { margin-left: var(--sp-5); margin-right: var(--sp-5); padding-left: var(--sp-5); }
+  .archivedNote { padding-left: var(--sp-5); padding-right: var(--sp-5); }
+  .emptyWrap { padding: var(--sp-8) var(--sp-5); }
+}
+
+/* Sprint filter in the page header actions. */
+.sprintFilter {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  height: 32px;
+  padding: 0 var(--sp-5);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: var(--fs-13);
+  font-weight: var(--fw-medium);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+.sprintFilter:hover { border-color: var(--text-disabled); background: var(--surface-hover); color: var(--text); }
+.sprintFilter[data-state="open"] { border-color: var(--accent); color: var(--text-accent); }
+.sprintFilterActive { border-color: var(--accent); background: var(--accent-subtle); color: var(--text-accent); }
+
+/* Blocked indicator — advisory, so it is a quiet label on the card rather
+   than lines between cards. The board stays a board. */
+.cardBlocked {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  align-self: flex-start;
+  margin-top: var(--sp-3);
+  padding: 1px var(--sp-3);
+  border-radius: var(--radius-xs);
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}

@@ -1,0 +1,55 @@
+/* The Chat area frame: rail + open conversation.
+   This is the element pinned to the shell's content row — the panes inside
+   fill it, so the transcript keeps being the only scroll container. */
+
+.layout {
+  display: flex;
+  height: calc(100dvh - var(--topbar-h));
+  min-height: 0;
+}
+
+.rail { width: 264px; flex: none; }
+.pane { flex: 1; min-width: 0; height: 100%; }
+
+.placeholder {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: var(--sp-8);
+}
+
+/* ------------------------------------------------- narrow: master–detail */
+.mobileList {
+  height: calc(100dvh - var(--topbar-h));
+  display: flex;
+  min-height: 0;
+}
+.railFull { flex: 1; min-width: 0; border-right: none; }
+
+.mobilePane {
+  height: calc(100dvh - var(--topbar-h));
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.paneBody { flex: 1; min-height: 0; }
+
+.back {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  color: var(--text-secondary);
+}
+.back:hover { color: var(--text); }
+.back:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
+
+/* The rail is narrower on a tablet, where the pane needs the room more. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .rail { width: 216px; }
+}

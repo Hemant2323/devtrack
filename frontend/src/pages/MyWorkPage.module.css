@@ -1,0 +1,193 @@
+/* My Work: one list of what is waiting, plus the context around it. */
+
+.body { padding: var(--sp-8); display: flex; flex-direction: column; gap: var(--sp-6); }
+
+.filters { align-self: flex-start; }
+
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: var(--sp-6);
+  align-items: start;
+}
+.main, .side { display: flex; flex-direction: column; gap: var(--sp-6); min-width: 0; }
+
+.section { display: flex; flex-direction: column; gap: var(--sp-4); }
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-subtle);
+  font-weight: var(--fw-medium);
+}
+.count {
+  padding: 0 var(--sp-3);
+  border-radius: var(--radius-full);
+  background: var(--surface-active);
+  font-size: 10px;
+  color: var(--text-secondary);
+}
+.hint { font-size: var(--fs-12); color: var(--text-subtle); margin-top: -2px; }
+.sectionEmpty { font-size: var(--fs-13); color: var(--text-subtle); }
+
+.list { display: flex; flex-direction: column; gap: var(--sp-3); list-style: none; }
+/* Finished work stays available but stops competing for attention. */
+.listMuted { opacity: 0.72; }
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: inherit;
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+.row:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+}
+.row:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+
+.rowIcon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  color: var(--text-subtle);
+}
+
+.rowMain { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--sp-3); }
+.rowTop { display: flex; align-items: baseline; gap: var(--sp-4); min-width: 0; }
+.title {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-13);
+  font-weight: var(--fw-semibold);
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  font-size: var(--fs-11);
+  color: var(--text-subtle);
+}
+
+.flag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 1px var(--sp-3);
+  border-radius: var(--radius-xs);
+  font-weight: var(--fw-semibold);
+}
+.flagOverdue { background: var(--danger-bg); color: var(--danger-fg); }
+.flagBlocked { background: var(--warning-bg); color: var(--warning-fg); }
+
+.due { font-family: var(--font-mono); }
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 1px var(--sp-3);
+  border-radius: var(--radius-xs);
+  background: var(--surface-active);
+  color: var(--text-secondary);
+}
+
+.rowEnd { flex: none; display: flex; align-items: center; gap: var(--sp-4); }
+
+.skelRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+/* --------------------------------------------------------------- context */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding: var(--sp-5) var(--sp-6);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+.panelTitle {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-subtle);
+  font-weight: var(--fw-medium);
+}
+.panelEmpty { font-size: var(--fs-12); color: var(--text-subtle); line-height: 1.5; }
+
+.sprint { display: flex; flex-direction: column; gap: var(--sp-3); }
+.sprintName {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-13);
+  font-weight: var(--fw-semibold);
+  color: var(--text);
+}
+.sprintName:hover { color: var(--text-accent); text-decoration: none; }
+.sprintDates { font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-subtle); }
+.sprintCount { font-size: var(--fs-12); color: var(--text-secondary); }
+
+.meetings { display: flex; flex-direction: column; gap: var(--sp-3); list-style: none; }
+.meeting {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  color: var(--text-secondary);
+  min-width: 0;
+}
+.meeting:hover { color: var(--text-accent); text-decoration: none; }
+.meeting:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.meetingTitle {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-12);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.meetingWhen {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-subtle);
+}
+
+@media (max-width: 1080px) {
+  .columns { grid-template-columns: minmax(0, 1fr); }
+  /* Context first on a narrow screen would push the work off-screen, so it
+     stays below the list it describes. */
+  .side { order: 2; }
+}
+
+@media (max-width: 767px) {
+  .body { padding: var(--sp-5); gap: var(--sp-5); }
+  .row { flex-wrap: wrap; }
+  .rowEnd { width: 100%; padding-left: 24px; }
+}

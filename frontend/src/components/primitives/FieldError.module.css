@@ -1,0 +1,10 @@
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  font-size: var(--fs-12);
+  color: var(--danger-fg);
+  animation: dt-rise-in var(--dur-fast) var(--ease-out);
+}
+
+.icon { flex: none; margin-top: 1px; }

@@ -1,0 +1,241 @@
+/* =============================================================================
+   DevTrack design tokens
+   -----------------------------------------------------------------------------
+   Two layers, deliberately separated:
+
+     1. PRIMITIVES  raw palette + scales. Theme-agnostic. Never used directly
+                    by a component.
+     2. SEMANTIC    role-named tokens (--surface, --text, --border...) that map
+                    onto primitives. Components use ONLY these, which is what
+                    lets themes.css swap the whole UI by redefining one block.
+
+   Rule: if a component stylesheet contains a raw hex value or a raw px size,
+   it is a bug. Add a token instead.
+   ========================================================================== */
+
+:root {
+  /* ---------------------------------------------------------------------
+     PRIMITIVES — palette
+     Neutrals carry a faint cool cast so they sit with the indigo accent
+     rather than reading as flat browser grey.
+     --------------------------------------------------------------------- */
+  --n-0:   #ffffff;
+  --n-25:  #fcfcfd;
+  --n-50:  #f8f9fb;
+  --n-100: #f1f3f7;
+  --n-150: #e9ecf2;
+  --n-200: #e2e6ee;
+  --n-300: #d0d6e2;
+  --n-400: #a6aebf;
+  --n-500: #7b8496;
+  --n-600: #5a6376;
+  --n-700: #414a5c;
+  --n-800: #2b3140;
+  --n-850: #212633;
+  --n-900: #191d27;
+  --n-950: #10131a;
+
+  /* Accent — indigo. One hue, used for interactive intent only. */
+  --a-50:  #eef1fe;
+  --a-100: #e0e5fd;
+  --a-200: #c5cdfb;
+  --a-300: #a3adf6;
+  --a-400: #7d87ef;
+  --a-500: #5a63e4;
+  --a-600: #4653d9;
+  --a-700: #3841b8;
+  --a-800: #2f3694;
+  --a-900: #282d75;
+
+  /* Semantic hues. Separate from the accent so state never reads as
+     "clickable" and the accent never reads as "status". */
+  --blue-100:  #dbeafe;  --blue-600:  #2563c9;  --blue-300: #93b4ec;
+  --amber-100: #fdf0d5;  --amber-600: #b45309;  --amber-300: #e5b168;
+  --green-100: #d9f2e3;  --green-600: #15803d;  --green-300: #7cc79a;
+  --red-100:   #fde3e3;  --red-600:   #b91c1c;  --red-300:  #eb9494;
+  --red-900:   #7f1d1d;
+  --orange-600: #c2410c;
+
+  /* Ink — the bold emphasis tier. Marketing surfaces, the auth panel, and any
+     band that needs to command attention. Fixed in both themes: ink is ink. */
+  --ink-900: #0e1420;
+  --ink-800: #151d2c;
+  --ink-700: #1c2637;
+  --ink-line: rgba(255, 255, 255, 0.09);
+  --ink-text: #eef1f7;
+  --ink-dim: #9aa6bd;
+  --ink-faint: #6b7488;
+  --accent-on-ink: #8b98ff;
+
+  /* Signal — data marks and preview graphics ONLY. Never on a control.
+     Quarantining it is what keeps it from becoming a second brand colour. */
+  --signal: #00b8a9;
+
+  /* ---------------------------------------------------------------------
+     PRIMITIVES — scales
+     --------------------------------------------------------------------- */
+
+  /* Spacing: 4px base. Dense-tool range lives in 4..24. */
+  --sp-0:  0;
+  --sp-1:  2px;
+  --sp-2:  4px;
+  --sp-3:  6px;
+  --sp-4:  8px;
+  --sp-5:  12px;
+  --sp-6:  16px;
+  --sp-7:  20px;
+  --sp-8:  24px;
+  --sp-9:  32px;
+  --sp-10: 40px;
+  --sp-11: 48px;
+  --sp-12: 64px;
+
+  /* Radius: capped at 8px. Anything rounder reads as a marketing card. */
+  --radius-xs:   3px;
+  --radius-sm:   4px;
+  --radius-md:   6px;
+  --radius-lg:   8px;
+  --radius-full: 999px;
+
+  /* Type. Body is 14px — the density baseline for a productivity tool. */
+  --font-sans: "Inter Variable", "Inter", -apple-system, BlinkMacSystemFont,
+               "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace,
+               SFMono-Regular, Menlo, Consolas, monospace;
+
+  --fs-11: 11px;
+  --fs-12: 12px;
+  --fs-13: 13px;
+  --fs-14: 14px;
+  --fs-16: 16px;
+  --fs-20: 20px;
+  --fs-24: 24px;
+  --fs-32: 32px;
+
+  /* Display tier — marketing surfaces only. The app never exceeds --fs-24. */
+  --fs-40: 40px;
+  --fs-48: 48px;
+  --fs-64: 64px;
+
+  --ls-display: -0.036em;   /* Inter needs real negative tracking at 40px+ */
+  --ls-tighter: -0.028em;
+
+  --lh-tight:   1.25;
+  --lh-snug:    1.4;
+  --lh-normal:  1.5;
+
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+
+  --ls-tight: -0.011em;   /* Inter needs a touch of negative tracking large */
+  --ls-wide:   0.04em;    /* uppercase micro-labels */
+
+  /* Motion. Short and flat-eased: product motion, not animation. */
+  --dur-instant: 80ms;
+  --dur-fast:    120ms;
+  --dur-base:    160ms;
+  --dur-slow:    240ms;
+  --ease-out:    cubic-bezier(0.2, 0, 0, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Layering */
+  --z-base:     0;
+  --z-sticky:   100;
+  --z-dropdown: 200;
+  --z-overlay:  300;
+  --z-modal:    400;
+  --z-popover:  500;
+  --z-toast:    600;
+
+  /* Fixed layout metrics, referenced by shell + media queries */
+  --topbar-h:       52px;
+  --sidebar-w:      236px;
+  --sidebar-rail-w: 56px;
+  --content-max:    1440px;
+
+  /* ---------------------------------------------------------------------
+     SEMANTIC — light theme (the default experience)
+     --------------------------------------------------------------------- */
+
+  /* Surfaces. "sunken" is a recessed well (board columns); "raised" sits
+     above the page (draggable cards); "overlay" floats (menus, dialogs). */
+  --surface-sunken:  var(--n-100);
+  --surface-page:    var(--n-50);
+  --surface:         var(--n-0);
+  --surface-raised:  var(--n-0);
+  --surface-overlay: var(--n-0);
+  --surface-hover:   var(--n-100);
+  --surface-active:  var(--n-150);
+  --surface-selected: var(--a-50);
+  --surface-inset:   var(--n-50);
+
+  /* Text */
+  --text:           var(--n-900);
+  --text-secondary: var(--n-600);
+  --text-subtle:    var(--n-500);
+  --text-disabled:  var(--n-400);
+  --text-inverse:   var(--n-0);
+  --text-accent:    var(--a-700);
+
+  /* Borders */
+  --border:         var(--n-200);
+  --border-strong:  var(--n-300);
+  --border-subtle:  var(--n-150);
+  --border-accent:  var(--a-600);
+
+  /* Interactive accent */
+  --accent:          var(--a-600);
+  --accent-hover:    var(--a-700);
+  --accent-active:   var(--a-800);
+  --accent-subtle:   var(--a-50);
+  --accent-contrast: var(--n-0);
+
+  /* Focus ring — always visible, never removed */
+  --focus-ring: var(--a-500);
+
+  /* Status (issue workflow). Each is paired with a text label in the UI. */
+  --status-todo-fg:        var(--n-600);
+  --status-todo-bg:        var(--n-150);
+  --status-progress-fg:    var(--blue-600);
+  --status-progress-bg:    var(--blue-100);
+  --status-testing-fg:     var(--amber-600);
+  --status-testing-bg:     var(--amber-100);
+  --status-done-fg:        var(--green-600);
+  --status-done-bg:        var(--green-100);
+
+  /* Priority — rendered as a stepped bar glyph, colour is reinforcement */
+  --priority-low:      var(--n-500);
+  --priority-medium:   var(--blue-600);
+  --priority-high:     var(--orange-600);
+  --priority-critical: var(--red-600);
+
+  /* Severity — bugs only, always rendered with its text label */
+  --severity-minor:    var(--n-600);
+  --severity-major:    var(--amber-600);
+  --severity-critical: var(--red-600);
+  --severity-blocker:  var(--red-900);
+
+  /* Feedback */
+  --success-fg: var(--green-600); --success-bg: var(--green-100);
+  --warning-fg: var(--amber-600); --warning-bg: var(--amber-100);
+  --danger-fg:  var(--red-600);   --danger-bg:  var(--red-100);
+  --info-fg:    var(--blue-600);  --info-bg:    var(--blue-100);
+
+  /* Elevation. Light theme lifts with shadow; dark theme lifts with
+     lighter surfaces (see themes.css). Borders do most of the separating. */
+  --shadow-xs: 0 1px 2px rgba(16, 19, 26, 0.06);
+  --shadow-sm: 0 1px 3px rgba(16, 19, 26, 0.10), 0 1px 2px rgba(16, 19, 26, 0.06);
+  --shadow-md: 0 4px 12px rgba(16, 19, 26, 0.10), 0 1px 3px rgba(16, 19, 26, 0.06);
+  --shadow-lg: 0 12px 32px rgba(16, 19, 26, 0.14), 0 4px 8px rgba(16, 19, 26, 0.06);
+  --shadow-drag: 0 8px 20px rgba(16, 19, 26, 0.18);
+
+  /* Tooltip is an inverted surface in light mode and a raised one in dark,
+     so it needs its own token pair rather than a hard-coded neutral. */
+  --tooltip-bg: var(--n-900);
+  --tooltip-fg: var(--n-0);
+  --tooltip-border: transparent;
+
+  --scrim: rgba(16, 19, 26, 0.44);
+}

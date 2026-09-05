@@ -24,6 +24,7 @@ def list_issues(
     priority: Priority | None = None,
     assignee_id: int | None = None,
     sprint_id: int | None = None,
+    in_backlog: bool | None = None,
     q: str | None = None,
     db: Session = Depends(get_db),
     me: User = Depends(get_current_user),
@@ -37,6 +38,7 @@ def list_issues(
         priority=priority,
         assignee_id=assignee_id,
         sprint_id=sprint_id,
+        in_backlog=in_backlog,
         q=q,
     )
 

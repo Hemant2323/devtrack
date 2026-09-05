@@ -1,0 +1,60 @@
+/* Team chat page chrome.
+   The transcript and composer live in features/chat/MessageThread.module.css,
+   shared with direct messages. What remains here is the column this page owns
+   and its header. Height comes from ChatLayout, which is the element pinned to
+   the viewport; this pane simply fills the space it is given. */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: var(--sp-6) var(--sp-8);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+  flex: none;
+}
+.headerText { min-width: 0; }
+.crumb {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-subtle);
+}
+.title {
+  margin-top: 2px;
+  font-size: var(--fs-20);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.025em;
+  color: var(--text);
+}
+.subtitle { margin-top: 2px; font-size: var(--fs-12); color: var(--text-secondary); }
+.live {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--text-subtle);
+  flex: none;
+}
+.liveDot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--success-fg);
+}
+
+@media (max-width: 767px) {
+  .header { padding: var(--sp-5); }
+  .title { font-size: var(--fs-16); }
+  .subtitle, .live { display: none; }
+}

@@ -1,0 +1,71 @@
+.thread { display: flex; flex-direction: column; }
+
+.comment {
+  display: flex;
+  gap: var(--sp-5);
+  padding: var(--sp-5) var(--sp-6);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.comment:last-of-type { border-bottom: none; }
+
+.body { flex: 1; min-width: 0; }
+
+.meta { display: flex; align-items: baseline; gap: var(--sp-4); margin-bottom: var(--sp-3); }
+.author { font-size: var(--fs-13); font-weight: var(--fw-semibold); color: var(--text); }
+.time { font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-subtle); }
+.edited { font-size: var(--fs-11); color: var(--text-subtle); font-style: italic; }
+
+.text {
+  font-size: var(--fs-13);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.actions { margin-left: auto; display: flex; gap: var(--sp-2); align-self: flex-start; }
+.actionButton {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  color: var(--text-subtle);
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+.comment:hover .actionButton,
+.actionButton:focus-visible { opacity: 1; }
+.actionButton:hover { background: var(--surface-hover); color: var(--text); }
+@media (hover: none) { .actionButton { opacity: 1; } }
+
+/* ------------------------------------------------------------------ form */
+.form {
+  display: flex;
+  gap: var(--sp-5);
+  padding: var(--sp-5) var(--sp-6);
+  border-top: 1px solid var(--border);
+  background: var(--surface-inset);
+}
+.formBody { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--sp-4); }
+.formActions { display: flex; align-items: center; gap: var(--sp-4); }
+.formHint { font-size: var(--fs-11); color: var(--text-subtle); margin-right: auto; }
+
+.editForm { display: flex; flex-direction: column; gap: var(--sp-4); }
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  font-size: var(--fs-12);
+  color: var(--danger-fg);
+}
+.error svg { flex: none; margin-top: 1px; }
+
+.archivedNote {
+  padding: var(--sp-5) var(--sp-6);
+  border-top: 1px solid var(--border);
+  background: var(--surface-inset);
+  font-size: var(--fs-12);
+  color: var(--text-subtle);
+}

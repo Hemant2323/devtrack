@@ -1,0 +1,137 @@
+/* Meetings list: two sections, not a calendar grid. */
+
+.body { padding: var(--sp-8); display: flex; flex-direction: column; gap: var(--sp-7); }
+
+.section { display: flex; flex-direction: column; gap: var(--sp-4); }
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-subtle);
+  font-weight: var(--fw-medium);
+}
+.count {
+  padding: 0 var(--sp-3);
+  border-radius: var(--radius-full);
+  background: var(--surface-active);
+  font-size: 10px;
+  color: var(--text-secondary);
+}
+.sectionEmpty { font-size: var(--fs-13); color: var(--text-subtle); }
+
+.list { display: flex; flex-direction: column; gap: var(--sp-4); list-style: none; }
+
+.row {
+  display: flex;
+  align-items: stretch;
+  gap: var(--sp-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+.row:hover { border-color: var(--border-strong); box-shadow: var(--shadow-sm); }
+/* A meeting that has happened stays legible but stops competing for attention. */
+.rowPast .title { color: var(--text-secondary); }
+
+.rowMain {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-5) var(--sp-6);
+  color: inherit;
+}
+.rowMain:hover { text-decoration: none; }
+.rowMain:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -2px; border-radius: var(--radius-lg); }
+
+.rowTop { display: flex; align-items: baseline; gap: var(--sp-5); min-width: 0; }
+.title {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.when {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--text-secondary);
+}
+
+.preview {
+  font-size: var(--fs-13);
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  font-size: var(--fs-12);
+  color: var(--text-subtle);
+}
+.organizer { color: var(--text-secondary); }
+.dot { color: var(--text-disabled); }
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-left: var(--sp-2);
+  padding: 1px var(--sp-3);
+  border-radius: var(--radius-xs);
+  background: var(--surface-active);
+  font-size: var(--fs-11);
+  color: var(--text-secondary);
+}
+.people { display: inline-flex; align-items: center; gap: var(--sp-3); margin-left: auto; }
+
+.join {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: 0 var(--sp-6);
+  border-left: 1px solid var(--border);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  color: var(--text-accent);
+}
+.join:hover { background: var(--surface-hover); text-decoration: none; }
+.join:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
+
+.skelRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding: var(--sp-5) var(--sp-6);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+@media (max-width: 767px) {
+  .body { padding: var(--sp-5); gap: var(--sp-6); }
+  .row { flex-direction: column; }
+  .rowTop { flex-direction: column; align-items: flex-start; gap: var(--sp-2); }
+  .join {
+    border-left: none;
+    border-top: 1px solid var(--border);
+    padding: var(--sp-4) var(--sp-6);
+    justify-content: center;
+  }
+  .people { margin-left: 0; }
+}

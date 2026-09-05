@@ -9,7 +9,22 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
-from app.routers import auth, board, comments, issues, notifications, projects
+from app.routers import (
+    auth,
+    board,
+    calendar,
+    chat,
+    comments,
+    dependencies,
+    issues,
+    meetings,
+    my_work,
+    notes,
+    notifications,
+    projects,
+    sprints,
+    testing,
+)
 
 app = FastAPI(
     title="DevTrack API",
@@ -32,7 +47,15 @@ app.include_router(auth.router)
 app.include_router(projects.router)
 app.include_router(issues.router)
 app.include_router(board.router)
+app.include_router(calendar.router)
 app.include_router(comments.router)
+app.include_router(chat.router)
+app.include_router(dependencies.router)
+app.include_router(sprints.router)
+app.include_router(testing.router)
+app.include_router(meetings.router)
+app.include_router(my_work.router)
+app.include_router(notes.router)
 app.include_router(notifications.router)
 
 

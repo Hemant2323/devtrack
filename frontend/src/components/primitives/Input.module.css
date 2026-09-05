@@ -1,0 +1,86 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.label {
+  font-size: var(--fs-12);
+  font-weight: var(--fw-medium);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.optional {
+  font-weight: var(--fw-regular);
+  color: var(--text-subtle);
+}
+
+.wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  position: absolute;
+  left: var(--sp-4);
+  display: flex;
+  color: var(--text-subtle);
+  pointer-events: none;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-13);
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.input { height: 32px; padding: 0 var(--sp-5); }
+.textarea { padding: var(--sp-4) var(--sp-5); resize: vertical; min-height: 72px; line-height: var(--lh-snug); }
+
+.hasIcon { padding-left: 32px; }
+
+.input::placeholder,
+.textarea::placeholder { color: var(--text-disabled); }
+
+.input:hover:not(:disabled):not(:focus),
+.textarea:hover:not(:disabled):not(:focus) { border-color: var(--text-disabled); }
+
+/* The ring is drawn with box-shadow so it doesn't shift layout, and the
+   outline is suppressed only because we replace it with something stronger. */
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-subtle);
+}
+
+.input:disabled,
+.textarea:disabled {
+  background: var(--surface-inset);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
+
+.invalid,
+.invalid:hover:not(:disabled):not(:focus) { border-color: var(--danger-fg); }
+.invalid:focus {
+  border-color: var(--danger-fg);
+  box-shadow: 0 0 0 3px var(--danger-bg);
+}
+
+.hint {
+  font-size: var(--fs-12);
+  color: var(--text-subtle);
+}

@@ -10,3 +10,9 @@
 
 [tool.ruff.lint]
 select = ["E4", "E7", "E9", "F"]
+
+[tool.pytest.ini_options]
+# FR-9 names its domain classes TestCase / TestRun / TestResult, which pytest
+# would otherwise try to collect as test classes and warn about. Every test in
+# this suite is a plain function, so class collection is simply switched off.
+python_classes = []

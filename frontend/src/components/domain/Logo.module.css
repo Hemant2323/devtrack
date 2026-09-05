@@ -1,0 +1,21 @@
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-4);
+  color: var(--text);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+}
+.brand:hover { text-decoration: none; }
+
+.mark {
+  flex: none;
+  color: var(--accent);
+}
+
+.wordmark {
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}

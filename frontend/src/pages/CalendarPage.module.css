@@ -1,0 +1,181 @@
+/* Project calendar: a month grid built from CSS grid, not a library. */
+
+.body { padding: var(--sp-8); display: flex; flex-direction: column; gap: var(--sp-5); }
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+  flex-wrap: wrap;
+}
+.nav { display: flex; align-items: center; gap: var(--sp-3); }
+.month {
+  margin-left: var(--sp-3);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-semibold);
+  color: var(--text);
+}
+.loading { font-size: var(--fs-11); color: var(--text-subtle); font-family: var(--font-mono); }
+
+.filters { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; margin-left: auto; }
+.filter {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-2) var(--sp-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: var(--fs-12);
+  color: var(--text-secondary);
+  transition: background-color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+}
+.filter:hover { background: var(--surface-hover); }
+.filter:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 1px; }
+/* A hidden type stays readable — struck through and dimmed, so the control
+   never relies on colour alone to say it is off. */
+.filterOff { opacity: 0.5; text-decoration: line-through; }
+.filterDot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--chip-fg);
+}
+
+/* ------------------------------------------------------------------ grid */
+.calendar {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-active);
+}
+.weekday {
+  padding: var(--sp-3) var(--sp-4);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-subtle);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  /* Six fixed rows, so paging months never changes the page height. */
+  grid-template-rows: repeat(6, minmax(112px, auto));
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-3);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  min-width: 0;
+}
+.day:nth-child(7n) { border-right: none; }
+.day:nth-last-child(-n + 7) { border-bottom: none; }
+/* Days from the neighbouring months stay visible but recede. */
+.dayOutside { background: var(--surface-page); }
+.dayOutside .dayNumber { color: var(--text-disabled); }
+.dayToday { background: var(--a-100); }
+
+.dayHead { display: flex; align-items: center; gap: var(--sp-2); }
+.dayNumber {
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--text-secondary);
+}
+/* Today is marked by a filled disc, not only by a background tint. */
+.todayNumber {
+  display: grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 var(--sp-2);
+  border-radius: var(--radius-full);
+  background: var(--a-600);
+  color: #fff;
+  font-weight: var(--fw-semibold);
+}
+
+.addDay {
+  margin-left: auto;
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-xs);
+  color: var(--text-subtle);
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+.day:hover .addDay,
+.addDay:focus-visible { opacity: 1; }
+.addDay:hover { background: var(--surface-active); color: var(--text); }
+@media (hover: none) { .addDay { opacity: 1; } }
+
+.dayBody { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+
+.chip {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  width: 100%;
+  padding: 1px var(--sp-3);
+  border-radius: var(--radius-xs);
+  background: var(--chip-bg);
+  color: var(--chip-fg);
+  font-size: var(--fs-11);
+  text-align: left;
+  min-width: 0;
+}
+.chip:hover { filter: brightness(0.97); }
+.chip:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 1px; }
+.chipDot {
+  width: 5px;
+  height: 5px;
+  flex: none;
+  border-radius: var(--radius-full);
+  background: currentColor;
+}
+.chipTime { flex: none; font-family: var(--font-mono); font-size: 10px; opacity: 0.85; }
+.chipTitle {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.more { font-size: 10px; color: var(--text-subtle); padding-left: var(--sp-3); }
+
+.empty { padding: var(--sp-7) 0; }
+
+@media (max-width: 900px) {
+  .body { padding: var(--sp-5); }
+  .toolbar { flex-direction: column; align-items: stretch; gap: var(--sp-4); }
+  .filters { margin-left: 0; }
+  .month { margin-left: auto; }
+}
+
+@media (max-width: 767px) {
+  /* Narrow screens keep the week columns — a calendar people recognise —
+     but shed the chip text, so each day shows its load as coloured marks and
+     opens on tap. Date navigation, filters and details all stay reachable. */
+  .grid { grid-template-rows: repeat(6, minmax(72px, auto)); }
+  .day { padding: var(--sp-2); }
+  .weekday { padding: var(--sp-2) var(--sp-3); font-size: 9px; }
+  .chipTitle, .chipTime { display: none; }
+  .chip { justify-content: center; padding: 3px; }
+  .chipDot { width: 6px; height: 6px; }
+  .more { font-size: 9px; padding-left: 0; text-align: center; }
+  .addDay { display: none; }
+}

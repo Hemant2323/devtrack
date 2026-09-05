@@ -1,0 +1,53 @@
+/* One calendar entry: its identity, its date, and the way back to its source. */
+
+.body { display: flex; flex-direction: column; gap: var(--sp-5); }
+
+.chips { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; }
+.reference {
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--text-secondary);
+}
+
+.row { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--sp-4); }
+
+.readOnly {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--surface-active);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-13);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.readOnly svg { flex: none; margin-top: 2px; }
+
+/* Sits at the left of the footer: navigation, not a confirming action. */
+.open {
+  margin-right: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  height: 34px;
+  padding: 0 var(--sp-4);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-13);
+  font-weight: var(--fw-semibold);
+  color: var(--text-accent);
+}
+.open:hover { background: var(--surface-hover); text-decoration: none; }
+.open:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+
+.error {
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-13);
+}
+
+@media (max-width: 600px) {
+  .row { grid-template-columns: minmax(0, 1fr); }
+}

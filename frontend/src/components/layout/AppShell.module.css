@@ -1,0 +1,48 @@
+/* Grid owns the frame. The only scroll container is <main>, so the page never
+   produces two competing scrollbars. */
+.shell {
+  display: grid;
+  grid-template-areas:
+    "topbar topbar"
+    "sidebar main";
+  grid-template-columns: auto 1fr;
+  grid-template-rows: var(--topbar-h) 1fr;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--surface-page);
+  overflow: hidden;
+}
+
+.noSidebar {
+  grid-template-areas:
+    "topbar"
+    "main";
+  grid-template-columns: 1fr;
+}
+
+.topbar { grid-area: topbar; }
+
+.main {
+  grid-area: main;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .main { scroll-behavior: auto; }
+}
+
+.content {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  min-height: 100%;
+}
+
+/* Entrance for the workspace, played once when the shell mounts.
+   It is deliberately NOT re-keyed per route: forcing a remount on every
+   pathname change threw away page state (filters, view mode, scroll) and made
+   browser Back/Forward feel lossy. Preserving state beats re-animating. */
+.transition {
+  animation: dt-rise-in var(--dur-base) var(--ease-out);
+}

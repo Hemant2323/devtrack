@@ -1,0 +1,69 @@
+/* Test cases + runs. Same tokens and rhythm as the issue surfaces. */
+
+.form { display: flex; flex-direction: column; gap: var(--sp-6); }
+
+.formError {
+  display: flex; align-items: flex-start; gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--danger-bg); color: var(--danger-fg);
+  border-radius: var(--radius-sm); font-size: var(--fs-13); line-height: 1.45;
+}
+.formError svg { flex: none; margin-top: 2px; }
+
+/* Result chip — label always present, colour only reinforces. */
+.result {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  height: 20px; padding: 0 var(--sp-3);
+  border-radius: var(--radius-xs);
+  font-size: var(--fs-11); font-weight: var(--fw-semibold);
+  letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap;
+  color: var(--r-fg); background: var(--r-bg);
+}
+
+/* ------------------------------------------------------------ run history */
+.runs { display: flex; flex-direction: column; }
+.run {
+  display: flex; align-items: flex-start; gap: var(--sp-5);
+  padding: var(--sp-5) var(--sp-6);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.run:last-child { border-bottom: none; }
+.runBody { flex: 1; min-width: 0; }
+.runMeta { display: flex; align-items: center; gap: var(--sp-4); flex-wrap: wrap; }
+.runWho { font-size: var(--fs-13); font-weight: var(--fw-semibold); color: var(--text); }
+.runTime { font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-subtle); }
+.runNotes {
+  margin-top: var(--sp-3); font-size: var(--fs-13); line-height: 1.6;
+  color: var(--text-secondary); white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.runBug {
+  display: inline-flex; align-items: center; gap: var(--sp-3);
+  margin-top: var(--sp-4); font-size: var(--fs-12);
+}
+.runActions { margin-left: auto; flex: none; }
+
+/* ------------------------------------------------------------ record form */
+.recordForm {
+  display: flex; flex-direction: column; gap: var(--sp-5);
+  padding: var(--sp-5) var(--sp-6);
+  border-top: 1px solid var(--border);
+  background: var(--surface-inset);
+}
+.resultChoices { display: flex; gap: var(--sp-3); flex-wrap: wrap; }
+.choice {
+  display: inline-flex; align-items: center; gap: var(--sp-3);
+  height: 30px; padding: 0 var(--sp-5);
+  border: 1px solid var(--border-strong); border-radius: var(--radius-sm);
+  background: var(--surface); font-size: var(--fs-13); color: var(--text-secondary);
+  transition: border-color var(--dur-fast) var(--ease-out),
+              background-color var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out);
+}
+.choice:hover { border-color: var(--text-disabled); color: var(--text); }
+.choiceSelected { border-color: var(--c-fg); background: var(--c-bg); color: var(--c-fg); font-weight: var(--fw-semibold); }
+.recordActions { display: flex; align-items: center; gap: var(--sp-4); }
+.recordHint { margin-right: auto; font-size: var(--fs-11); color: var(--text-subtle); }
+.archivedNote {
+  padding: var(--sp-5) var(--sp-6); border-top: 1px solid var(--border);
+  background: var(--surface-inset); font-size: var(--fs-12); color: var(--text-subtle);
+}

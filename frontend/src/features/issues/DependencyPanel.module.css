@@ -1,0 +1,130 @@
+/* Dependencies panel on the issue detail page.
+   Sits inside the shared .panel frame, so this file styles only the contents. */
+
+.panelBody { padding: var(--sp-6); display: flex; flex-direction: column; gap: var(--sp-5); }
+
+.group { display: flex; flex-direction: column; gap: var(--sp-3); }
+.groupTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-subtle);
+  font-weight: var(--fw-medium);
+}
+.groupCount {
+  padding: 0 var(--sp-3);
+  border-radius: var(--radius-full);
+  background: var(--surface-active);
+  font-size: 10px;
+  color: var(--text-secondary);
+}
+.groupHint { font-size: var(--fs-12); color: var(--text-subtle); }
+
+.list { display: flex; flex-direction: column; gap: 1px; }
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--radius-sm);
+  min-width: 0;
+}
+.row:hover { background: var(--surface-hover); }
+
+/* Open blocker vs resolved one. The status chip carries the same meaning in
+   words, so colour is never the only channel. */
+.dotOpen,
+.dotDone {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: var(--radius-full);
+}
+.dotOpen { background: var(--danger-fg); }
+.dotDone { background: var(--success-fg); }
+
+.rowLink {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-4);
+  min-width: 0;
+  flex: 1;
+  color: var(--text-secondary);
+}
+.rowLink:hover { color: var(--text-accent); text-decoration: none; }
+.rowLink:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; border-radius: var(--radius-xs); }
+.rowTitle {
+  font-size: var(--fs-13);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rowStatus { flex: none; }
+
+.remove {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  color: var(--text-subtle);
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+.row:hover .remove,
+.remove:focus-visible { opacity: 1; }
+.remove:hover { background: var(--danger-bg); color: var(--danger-fg); }
+.remove:disabled { opacity: .4; cursor: not-allowed; }
+@media (hover: none) { .remove { opacity: 1; } }
+
+.empty {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  font-size: var(--fs-13);
+  color: var(--text-subtle);
+  line-height: 1.5;
+}
+.empty svg { flex: none; }
+
+.actions { display: flex; }
+
+.readOnly {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-12);
+  color: var(--text-subtle);
+}
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-13);
+}
+.error svg { flex: none; margin-top: 2px; }
+.retry {
+  margin-left: auto;
+  color: inherit;
+  opacity: .8;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+}
+.retry:hover { opacity: 1; }
+
+.skel { display: flex; flex-direction: column; gap: var(--sp-4); }
+
+@media (max-width: 767px) {
+  .rowStatus { display: none; }
+}

@@ -1,0 +1,126 @@
+.body { padding: var(--sp-8); display: flex; flex-direction: column; gap: var(--sp-5); }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+  animation: dt-rise-in var(--dur-slow) var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 35ms);
+}
+@media (prefers-reduced-motion: reduce) { .card { animation: none; } }
+
+/* The active sprint is the one the team is working in — give it the accent
+   edge so it is findable at a glance in a long list. */
+.cardActive { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+.cardCompleted { background: var(--surface-inset); }
+
+.head { display: flex; align-items: flex-start; gap: var(--sp-5); }
+.headText { flex: 1; min-width: 0; }
+
+.name {
+  font-size: var(--fs-16);
+  font-weight: var(--fw-semibold);
+  color: var(--text);
+  letter-spacing: -0.015em;
+}
+.goal {
+  margin-top: var(--sp-3);
+  font-size: var(--fs-13);
+  line-height: 1.55;
+  color: var(--text-secondary);
+  max-width: 76ch;
+}
+.goalEmpty { color: var(--text-disabled); font-style: italic; }
+
+.actions { display: flex; align-items: center; gap: var(--sp-4); flex: none; }
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+  flex-wrap: wrap;
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--border-subtle);
+}
+.metaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-12);
+  color: var(--text-secondary);
+}
+.metaItem svg { color: var(--text-subtle); flex: none; }
+.metaValue {
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.metaLink { margin-left: auto; }
+
+.progress {
+  display: flex;
+  height: 6px;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  background: var(--surface-active);
+  min-width: 120px;
+  flex: 1;
+  max-width: 260px;
+}
+.progressDone { background: var(--status-done-fg); }
+
+.skelCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+.archivedNote {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-8);
+  background: var(--warning-bg);
+  color: var(--warning-fg);
+  border-bottom: 1px solid var(--border);
+  font-size: var(--fs-13);
+}
+
+.errorBar {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  margin: var(--sp-6) var(--sp-8) 0;
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-13);
+}
+.errorBar svg { flex: none; margin-top: 2px; }
+.errorDismiss {
+  margin-left: auto;
+  color: inherit;
+  opacity: 0.7;
+  padding: 0 var(--sp-3);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+}
+.errorDismiss:hover { opacity: 1; }
+
+@media (max-width: 767px) {
+  .body { padding: var(--sp-5); }
+  .head { flex-direction: column; gap: var(--sp-4); }
+  .actions { width: 100%; }
+  .errorBar, .archivedNote { margin-left: var(--sp-5); margin-right: var(--sp-5); padding-left: var(--sp-5); }
+  .progress { max-width: none; }
+}

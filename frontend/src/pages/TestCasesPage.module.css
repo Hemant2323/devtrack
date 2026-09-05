@@ -1,0 +1,69 @@
+/* Test cases list — same table rhythm as Issues and Backlog. */
+.toolbar {
+  position: sticky; top: 0; z-index: var(--z-sticky);
+  display: flex; align-items: center; gap: var(--sp-4);
+  padding: var(--sp-5) var(--sp-8);
+  background: var(--surface); border-bottom: 1px solid var(--border); flex-wrap: wrap;
+}
+.search { width: 300px; flex: none; }
+.search input { height: 30px; }
+.spacer { margin-left: auto; }
+.count {
+  font-family: var(--font-mono); font-size: var(--fs-11);
+  color: var(--text-subtle); letter-spacing: .04em; font-variant-numeric: tabular-nums;
+}
+
+.body { padding: var(--sp-8); }
+.panel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); overflow: hidden;
+  --tc-cols: minmax(0, 1fr) auto auto auto;
+}
+
+.row {
+  display: grid; grid-template-columns: var(--tc-cols);
+  gap: var(--sp-5); align-items: center;
+  padding: var(--sp-4) var(--sp-6);
+  border-bottom: 1px solid var(--border-subtle);
+  color: inherit; text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.row:last-child { border-bottom: none; }
+.row:hover { background: var(--surface-hover); text-decoration: none; }
+.row:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
+
+.title {
+  font-size: var(--fs-13); font-weight: var(--fw-medium); color: var(--text);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.sub {
+  margin-top: 2px; font-size: var(--fs-11); color: var(--text-subtle);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.linked {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-subtle);
+}
+.runCount {
+  font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-subtle);
+  font-variant-numeric: tabular-nums;
+}
+.skelRow {
+  display: grid; grid-template-columns: var(--tc-cols); gap: var(--sp-5);
+  align-items: center; padding: var(--sp-4) var(--sp-6);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.archivedNote {
+  display: flex; align-items: center; gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-8);
+  background: var(--warning-bg); color: var(--warning-fg);
+  border-bottom: 1px solid var(--border); font-size: var(--fs-13);
+}
+@media (max-width: 767px) {
+  .toolbar { padding: var(--sp-4) var(--sp-5); }
+  .search { width: 100%; order: -1; }
+  .body { padding: var(--sp-5); }
+  .panel { --tc-cols: minmax(0, 1fr) auto; }
+  .linked { display: none; }
+  .archivedNote { padding-left: var(--sp-5); padding-right: var(--sp-5); }
+}

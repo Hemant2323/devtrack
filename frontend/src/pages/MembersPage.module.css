@@ -1,0 +1,218 @@
+/* Project members. Same table rhythm and tokens as Issues / Backlog, so the
+   page reads as part of the same workspace. Also carries the few styles the
+   Add-member dialog needs, keeping the members feature's CSS in one place. */
+
+.body { padding: var(--sp-8); }
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  --member-cols: auto minmax(0, 1fr) auto auto auto;
+}
+
+.head {
+  display: grid;
+  grid-template-columns: var(--member-cols);
+  gap: var(--sp-5);
+  align-items: center;
+  padding: var(--sp-4) var(--sp-6);
+  background: var(--surface-inset);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: var(--member-cols);
+  gap: var(--sp-5);
+  align-items: center;
+  padding: var(--sp-4) var(--sp-6);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+}
+.row:last-child { border-bottom: none; }
+.row:hover { background: var(--surface-hover); }
+/* An in-flight role change or removal: inert until the server answers. */
+.rowPending { opacity: 0.55; pointer-events: none; }
+
+.identity { min-width: 0; }
+.name {
+  font-size: var(--fs-13);
+  font-weight: var(--fw-medium);
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.you {
+  margin-left: var(--sp-3);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-accent);
+  background: var(--accent-subtle);
+  border-radius: var(--radius-xs);
+  padding: 1px var(--sp-3);
+}
+.email {
+  font-size: var(--fs-11);
+  color: var(--text-subtle);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.joined {
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--text-subtle);
+  white-space: nowrap;
+  text-align: right;
+}
+
+/* Inline role picker — the Menu-trigger pattern used on Issue detail. */
+.rolePicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  height: 26px;
+  padding: 0 var(--sp-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-12);
+  color: var(--text);
+  transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+.rolePicker:hover { background: var(--surface-hover); border-color: var(--border); }
+.rolePicker[data-state="open"] { background: var(--surface-active); border-color: var(--border-strong); }
+.rolePicker svg { color: var(--text-subtle); flex: none; }
+
+.removeButton {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  color: var(--text-subtle);
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.row:hover .removeButton,
+.removeButton:focus-visible { opacity: 1; }
+.removeButton:hover { background: var(--danger-bg); color: var(--danger-fg); }
+@media (hover: none) { .removeButton { opacity: 1; } }
+
+.actionSlot { width: 28px; }
+
+/* --------------------------------------------------------------- messages */
+.errorBar {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  margin: var(--sp-6) var(--sp-8) 0;
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-13);
+  animation: dt-rise-in var(--dur-fast) var(--ease-out);
+}
+.errorBar svg { flex: none; margin-top: 2px; }
+.errorDismiss {
+  margin-left: auto;
+  color: inherit;
+  opacity: 0.7;
+  padding: 0 var(--sp-3);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+}
+.errorDismiss:hover { opacity: 1; }
+
+.archivedNote {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-8);
+  background: var(--warning-bg);
+  color: var(--warning-fg);
+  border-bottom: 1px solid var(--border);
+  font-size: var(--fs-13);
+}
+
+.skelRow {
+  display: grid;
+  grid-template-columns: var(--member-cols);
+  gap: var(--sp-5);
+  align-items: center;
+  padding: var(--sp-4) var(--sp-6);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* ------------------------------------------------------ dialogs (shared) */
+.form { display: flex; flex-direction: column; gap: var(--sp-6); }
+
+.note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--info-bg);
+  color: var(--info-fg);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-12);
+  line-height: 1.5;
+}
+.note svg { flex: none; margin-top: 1px; }
+
+.formError {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-13);
+  line-height: 1.45;
+}
+.formError svg { flex: none; margin-top: 2px; }
+
+.confirmText { font-size: var(--fs-13); line-height: 1.6; color: var(--text-secondary); }
+.confirmName { font-weight: var(--fw-semibold); color: var(--text); }
+
+/* ------------------------------------------------------------- responsive */
+@media (max-width: 900px) {
+  .panel { --member-cols: auto minmax(0, 1fr) auto auto; }
+  .joined, .head .joined { display: none; }
+}
+
+@media (max-width: 767px) {
+  .body { padding: var(--sp-5); }
+  .head { display: none; }
+  .panel { --member-cols: none; }
+  .row, .skelRow {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "avatar identity action"
+      "role   role     role";
+    row-gap: var(--sp-4);
+    padding: var(--sp-5);
+  }
+  .avatarCell { grid-area: avatar; }
+  .identity { grid-area: identity; }
+  .actionSlot { grid-area: action; }
+  .roleCell { grid-area: role; }
+  .errorBar, .archivedNote {
+    margin-left: var(--sp-5);
+    margin-right: var(--sp-5);
+    padding-left: var(--sp-5);
+  }
+}

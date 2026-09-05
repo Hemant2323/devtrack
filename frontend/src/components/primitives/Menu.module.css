@@ -1,0 +1,83 @@
+.content {
+  min-width: 200px;
+  background: var(--surface-overlay);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: var(--sp-2);
+  z-index: var(--z-dropdown);
+  transform-origin: var(--radix-dropdown-menu-content-transform-origin);
+}
+
+/* Enter only. There is deliberately NO [data-state="closed"] animation:
+   Radix keeps the content mounted until an exit animation reports completion,
+   and everything the menu tears down on unmount would be gated behind it.
+   With no closed-state animation the computed animation-name is "none", so
+   Presence unmounts immediately and teardown is deterministic. */
+.content[data-state="open"] {
+  animation: dt-overlay-in var(--dur-base) var(--ease-out);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  height: 30px;
+  padding: 0 var(--sp-4);
+  border-radius: var(--radius-xs);
+  font-size: var(--fs-13);
+  color: var(--text);
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+}
+
+/* Radix sets data-highlighted for both mouse and keyboard, so hover and
+   arrow-key navigation land on exactly the same visual state. */
+.item[data-highlighted] {
+  background: var(--surface-hover);
+}
+.item[data-disabled] {
+  color: var(--text-disabled);
+  pointer-events: none;
+}
+
+.itemIcon {
+  flex: none;
+  color: var(--text-subtle);
+}
+.item[data-highlighted] .itemIcon { color: var(--text-secondary); }
+
+.danger { color: var(--danger-fg); }
+.danger .itemIcon { color: var(--danger-fg); }
+.danger[data-highlighted] { background: var(--danger-bg); }
+
+.check {
+  margin-left: auto;
+  color: var(--accent);
+  flex: none;
+}
+
+.label {
+  padding: var(--sp-3) var(--sp-4) var(--sp-2);
+  font-size: var(--fs-11);
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  color: var(--text-subtle);
+}
+
+.separator {
+  height: 1px;
+  background: var(--border);
+  margin: var(--sp-2) calc(var(--sp-2) * -1);
+}
+
+.shortcut {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--text-subtle);
+}
+
+.trailing { margin-left: auto; display: flex; align-items: center; gap: var(--sp-3); }

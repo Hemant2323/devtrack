@@ -1,0 +1,47 @@
+/* Schedule/edit form inside the shared Dialog. */
+
+.form { display: flex; flex-direction: column; gap: var(--sp-5); }
+
+.row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-4); }
+
+.participants { display: flex; flex-direction: column; gap: var(--sp-4); }
+.legend {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-subtle);
+}
+
+.people { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
+
+.person {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+.person:hover { background: var(--surface-hover); }
+.personSelected { border-color: var(--a-600); background: var(--a-100); }
+.person:focus-within { outline: 2px solid var(--focus-ring); outline-offset: 1px; }
+
+.checkbox { accent-color: var(--a-600); }
+.personName { font-size: var(--fs-12); color: var(--text); }
+
+.note { font-size: var(--fs-12); color: var(--text-subtle); }
+
+.error {
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-13);
+}
+
+@media (max-width: 600px) {
+  .row { grid-template-columns: minmax(0, 1fr); }
+}

@@ -1,0 +1,160 @@
+/* Project components. Same table rhythm and tokens as Members, so the two
+   configuration pages read as one surface. Also carries the few styles the
+   create dialog needs, keeping this feature's CSS in one place. */
+
+.body { padding: var(--sp-8); }
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  --component-cols: auto minmax(0, 1fr) auto;
+}
+
+.head {
+  display: grid;
+  grid-template-columns: var(--component-cols);
+  gap: var(--sp-5);
+  align-items: center;
+  padding: var(--sp-4) var(--sp-6);
+  background: var(--surface-inset);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: var(--component-cols);
+  gap: var(--sp-5);
+  align-items: center;
+  padding: var(--sp-4) var(--sp-6);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.row:last-child { border-bottom: none; }
+.row:hover { background: var(--surface-hover); }
+
+/* A component is an area of the product — a small square marker reads as a
+   label rather than a person or a status. */
+.marker {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: var(--accent-subtle);
+  color: var(--text-accent);
+  flex: none;
+}
+
+.name {
+  font-size: var(--fs-13);
+  font-weight: var(--fw-medium);
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.assignee {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-12);
+  color: var(--text-secondary);
+  min-width: 0;
+}
+.assigneeName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.assigneeEmail {
+  font-size: var(--fs-11);
+  color: var(--text-subtle);
+}
+.noAssignee { font-size: var(--fs-12); color: var(--text-disabled); }
+
+.skelRow {
+  display: grid;
+  grid-template-columns: var(--component-cols);
+  gap: var(--sp-5);
+  align-items: center;
+  padding: var(--sp-4) var(--sp-6);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* An explanation of a real limitation, not decoration: components cannot be
+   renamed or removed because the API has no such endpoints. */
+.limitation {
+  margin-top: var(--sp-5);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  font-size: var(--fs-12);
+  line-height: 1.55;
+  color: var(--text-subtle);
+}
+.limitation svg { flex: none; margin-top: 2px; }
+
+.archivedNote {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-8);
+  background: var(--warning-bg);
+  color: var(--warning-fg);
+  border-bottom: 1px solid var(--border);
+  font-size: var(--fs-13);
+}
+
+/* ------------------------------------------------------- create dialog */
+.form { display: flex; flex-direction: column; gap: var(--sp-6); }
+
+.note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--info-bg);
+  color: var(--info-fg);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-12);
+  line-height: 1.5;
+}
+.note svg { flex: none; margin-top: 1px; }
+
+.formError {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-13);
+  line-height: 1.45;
+}
+.formError svg { flex: none; margin-top: 2px; }
+
+@media (max-width: 767px) {
+  .body { padding: var(--sp-5); }
+  .head { display: none; }
+  .panel { --component-cols: auto minmax(0, 1fr); }
+  .row, .skelRow {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas: "marker name" "assignee assignee";
+    row-gap: var(--sp-3);
+    padding: var(--sp-5);
+  }
+  .markerCell { grid-area: marker; }
+  .nameCell { grid-area: name; }
+  .assigneeCell { grid-area: assignee; }
+  .archivedNote { padding-left: var(--sp-5); padding-right: var(--sp-5); }
+}

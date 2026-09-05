@@ -1,0 +1,83 @@
+/* Add-dependency dialog: direction, then the issue. */
+
+.directions { display: flex; flex-direction: column; gap: var(--sp-3); }
+.legend {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-subtle);
+  margin-bottom: var(--sp-3);
+}
+
+.direction {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  padding: var(--sp-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+.direction:hover { background: var(--surface-hover); }
+.directionActive { border-color: var(--a-600); background: var(--a-100); }
+.direction:focus-within { outline: 2px solid var(--focus-ring); outline-offset: 1px; }
+
+.radio { margin-top: 3px; accent-color: var(--a-600); }
+.directionText { display: flex; flex-direction: column; gap: 1px; }
+.directionLabel { font-size: var(--fs-13); font-weight: var(--fw-semibold); color: var(--text); }
+.directionHint { font-size: var(--fs-12); color: var(--text-secondary); }
+
+.picker { margin-top: var(--sp-6); }
+
+.list {
+  margin-top: var(--sp-4);
+  max-height: 38vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  width: 100%;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--radius-sm);
+  text-align: left;
+  min-width: 0;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.option:hover { background: var(--surface-hover); }
+.option:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
+.optionSelected { background: var(--a-100); }
+
+.optionTitle {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-13);
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.optionStatus { flex: none; }
+
+.note {
+  padding: var(--sp-5) var(--sp-4);
+  font-size: var(--fs-12);
+  color: var(--text-subtle);
+  line-height: 1.5;
+}
+
+.error {
+  margin-top: var(--sp-5);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-13);
+}

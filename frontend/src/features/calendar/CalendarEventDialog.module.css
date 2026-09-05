@@ -1,0 +1,21 @@
+/* Custom calendar event form inside the shared Dialog. */
+
+.form { display: flex; flex-direction: column; gap: var(--sp-5); }
+
+.row { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--sp-4); }
+
+/* Pushed to the left of the footer, away from the confirming actions. */
+.delete { margin-right: auto; color: var(--danger-fg); }
+.delete:hover { background: var(--danger-bg); }
+
+.error {
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-13);
+}
+
+@media (max-width: 600px) {
+  .row { grid-template-columns: minmax(0, 1fr); }
+}

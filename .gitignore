@@ -21,6 +21,9 @@ node_modules/
 dist/
 .vite/
 
+# Local tooling
+.claude/
+
 # IDE / OS
 .vscode/
 .idea/

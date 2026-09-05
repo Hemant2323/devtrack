@@ -1,0 +1,56 @@
+.field { display: flex; flex-direction: column; gap: var(--sp-3); }
+
+.label {
+  font-size: var(--fs-12);
+  font-weight: var(--fw-medium);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.optional { font-weight: var(--fw-regular); color: var(--text-subtle); }
+
+.wrap { position: relative; display: flex; align-items: center; }
+
+/* A native <select> rather than a custom listbox: no extra dependency, correct
+   keyboard and screen-reader behaviour for free, and a real picker on mobile.
+   Only the chrome is restyled. */
+.select {
+  width: 100%;
+  height: 32px;
+  padding: 0 30px 0 var(--sp-5);
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-13);
+  appearance: none;
+  cursor: pointer;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+.select:hover:not(:disabled):not(:focus) { border-color: var(--text-disabled); }
+.select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-subtle);
+}
+.select:disabled {
+  background: var(--surface-inset);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
+
+.chevron {
+  position: absolute;
+  right: var(--sp-4);
+  color: var(--text-subtle);
+  pointer-events: none;
+}
+
+.invalid,
+.invalid:hover:not(:disabled):not(:focus) { border-color: var(--danger-fg); }
+.invalid:focus { border-color: var(--danger-fg); box-shadow: 0 0 0 3px var(--danger-bg); }
+
+.hint { font-size: var(--fs-12); color: var(--text-subtle); }

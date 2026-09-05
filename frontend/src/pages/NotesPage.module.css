@@ -1,0 +1,88 @@
+/* Notes list. A list of documents, deliberately — no folders, no nesting. */
+
+.body { padding: var(--sp-8); display: flex; flex-direction: column; gap: var(--sp-6); }
+
+.toolbar { display: flex; align-items: flex-end; gap: var(--sp-5); }
+.search { flex: 1; min-width: 0; max-width: 420px; }
+.filter { width: 190px; flex: none; }
+
+.list { display: flex; flex-direction: column; gap: var(--sp-4); list-style: none; }
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-5) var(--sp-6);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: inherit;
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+.row:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+}
+.row:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+
+.rowTop { display: flex; align-items: center; gap: var(--sp-4); min-width: 0; }
+.title {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.excerpt {
+  font-size: var(--fs-13);
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  font-size: var(--fs-12);
+  color: var(--text-subtle);
+}
+.author { color: var(--text-secondary); }
+.dot { color: var(--text-disabled); }
+.when { font-family: var(--font-mono); font-size: var(--fs-11); }
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-left: var(--sp-3);
+  padding: 1px var(--sp-3);
+  border-radius: var(--radius-xs);
+  background: var(--surface-active);
+  font-size: var(--fs-11);
+  color: var(--text-secondary);
+}
+
+.skelRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding: var(--sp-5) var(--sp-6);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+@media (max-width: 767px) {
+  .body { padding: var(--sp-5); gap: var(--sp-5); }
+  .toolbar { flex-direction: column; align-items: stretch; gap: var(--sp-4); }
+  .search { max-width: none; }
+  .filter { width: 100%; }
+}

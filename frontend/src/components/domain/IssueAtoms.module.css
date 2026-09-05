@@ -1,0 +1,65 @@
+/* Shared atoms used by the board, the issue table and the marketing previews.
+   Kept in one module because they are one visual family — a status chip must
+   never diverge between the product and the page that advertises it. */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  height: 19px;
+  padding: 0 var(--sp-3);
+  border-radius: var(--radius-xs);
+  font-size: var(--fs-11);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--chip-fg);
+  background: var(--chip-bg);
+}
+
+.key {
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  font-weight: var(--fw-semibold);
+  color: var(--text-subtle);
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.keyLink:hover { color: var(--text-accent); text-decoration: none; }
+
+/* Priority: bar count carries the level, colour reinforces it. */
+.pri {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 1.5px;
+  height: 10px;
+  color: var(--pri-color);
+  flex: none;
+}
+.pri span {
+  width: 2.5px;
+  border-radius: 1px;
+  background: currentColor;
+  opacity: 0.26;
+}
+.pri span:nth-child(1) { height: 4px; }
+.pri span:nth-child(2) { height: 7px; }
+.pri span:nth-child(3) { height: 10px; }
+.lvl1 span:nth-child(1),
+.lvl2 span:nth-child(-n + 2),
+.lvl3 span,
+.lvl4 span { opacity: 1; }
+
+/* Type glyph: circle = bug, square = task. Shape, not just colour. */
+.type {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-xs);
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+.typeBug { background: var(--danger-bg); }
+.typeTask { background: var(--info-bg); }

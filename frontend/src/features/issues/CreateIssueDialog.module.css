@@ -1,0 +1,37 @@
+.form { display: flex; flex-direction: column; gap: var(--sp-6); }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-5); }
+
+/* Type first and alone: it decides whether severity is required at all, so it
+   reads as the question that shapes the rest of the form. */
+.typeRow { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-5); }
+
+.note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--info-bg);
+  color: var(--info-fg);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-12);
+  line-height: 1.5;
+}
+.note svg { flex: none; margin-top: 1px; }
+
+.formError {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-13);
+  line-height: 1.45;
+}
+.formError svg { flex: none; margin-top: 2px; }
+
+@media (max-width: 560px) {
+  .grid, .typeRow { grid-template-columns: 1fr; }
+}

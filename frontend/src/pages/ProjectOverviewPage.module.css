@@ -1,0 +1,271 @@
+/* Project Overview — a workspace summary, not a dashboard.
+   Tinted ground, white panels, hairline borders; every figure is real. */
+
+.body {
+  padding: var(--sp-8);
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr);
+  gap: var(--sp-6);
+  align-items: start;
+}
+
+.col { display: flex; flex-direction: column; gap: var(--sp-6); min-width: 0; }
+
+/* ------------------------------------------------------------------ panel */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  animation: dt-rise-in var(--dur-slow) var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .panel { animation: none; }
+}
+
+.panelHead {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-5) var(--sp-6);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.panelTitle {
+  font-size: var(--fs-13);
+  font-weight: var(--fw-semibold);
+  color: var(--text);
+}
+.panelMeta {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--text-subtle);
+}
+.panelBody { padding: var(--sp-6); }
+.panelBodyFlush { padding: 0; }
+
+.panelFoot {
+  padding: var(--sp-4) var(--sp-6);
+  border-top: 1px solid var(--border-subtle);
+  background: var(--surface-inset);
+}
+.panelLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  color: var(--text-accent);
+}
+.panelLink:hover { text-decoration: none; gap: var(--sp-4); }
+.panelLink svg { transition: transform var(--dur-fast) var(--ease-out); }
+.panelLink:hover svg { transform: translateX(2px); }
+
+/* --------------------------------------------------------------- workflow */
+.completion { display: flex; align-items: baseline; gap: var(--sp-4); margin-bottom: var(--sp-5); }
+.completionValue {
+  font-size: var(--fs-32);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.03em;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.completionLabel { font-size: var(--fs-13); color: var(--text-secondary); }
+
+/* The distribution bar is the lane motif at data scale: one continuous track
+   segmented by workflow state. */
+.track {
+  display: flex;
+  height: 8px;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  background: var(--surface-active);
+  margin-bottom: var(--sp-6);
+}
+.segment {
+  background: var(--seg-color);
+  transition: flex-grow var(--dur-slow) var(--ease-out);
+}
+.segment + .segment { border-left: 1px solid var(--surface); }
+
+.statusList { display: flex; flex-direction: column; gap: var(--sp-1); }
+.statusRow {
+  display: grid;
+  grid-template-columns: 10px minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-3) var(--sp-2);
+  border-radius: var(--radius-sm);
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--seg-color);
+}
+.statusName { font-size: var(--fs-13); color: var(--text-secondary); }
+.statusCount {
+  font-family: var(--font-mono);
+  font-size: var(--fs-13);
+  font-weight: var(--fw-semibold);
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.statusPct {
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--text-subtle);
+  min-width: 38px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------- stat strip */
+.strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--border-subtle);
+}
+.stripItem {
+  padding: var(--sp-5) var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.stripItem + .stripItem { border-left: 1px solid var(--border-subtle); }
+.stripValue {
+  font-size: var(--fs-20);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.02em;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.stripLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-subtle);
+}
+
+/* ---------------------------------------------------------- recent issues */
+.issueRow {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr) auto auto auto;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-6);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.issueRow:last-child { border-bottom: none; }
+.issueRow:hover { background: var(--surface-hover); }
+.issueTitle {
+  font-size: var(--fs-13);
+  font-weight: var(--fw-medium);
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.issueDate {
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  color: var(--text-subtle);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------- details */
+.dl { display: flex; flex-direction: column; gap: var(--sp-1); }
+.dlRow {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+  padding: var(--sp-3) 0;
+}
+.dlRow + .dlRow { border-top: 1px solid var(--border-subtle); }
+.dt { font-size: var(--fs-12); color: var(--text-subtle); flex: none; min-width: 96px; }
+.dd {
+  margin-left: auto;
+  font-size: var(--fs-12);
+  color: var(--text);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.ddMono { font-family: var(--font-mono); font-weight: var(--fw-semibold); }
+
+/* ------------------------------------------------------------------- team */
+.memberRow {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-6);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.memberRow:last-child { border-bottom: none; }
+.memberText { min-width: 0; flex: 1; }
+.memberName {
+  font-size: var(--fs-13);
+  font-weight: var(--fw-medium);
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.memberEmail {
+  font-size: var(--fs-11);
+  color: var(--text-subtle);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------- components */
+.chips { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-inset);
+  font-size: var(--fs-12);
+  color: var(--text-secondary);
+}
+.chipName { font-weight: var(--fw-medium); color: var(--text); }
+
+/* -------------------------------------------------------------- skeletons */
+.skelPanel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+.archivedNote {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-6);
+  background: var(--warning-bg);
+  color: var(--warning-fg);
+  border-bottom: 1px solid var(--border);
+  font-size: var(--fs-13);
+}
+
+@media (max-width: 1080px) {
+  .body { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 767px) {
+  .body { padding: var(--sp-5); gap: var(--sp-5); }
+  .strip { grid-template-columns: 1fr; }
+  .stripItem + .stripItem { border-left: none; border-top: 1px solid var(--border-subtle); }
+  .issueRow { grid-template-columns: auto auto minmax(0, 1fr) auto; padding: var(--sp-4) var(--sp-5); }
+  .issueDate, .issueRow > :nth-child(5) { display: none; }
+}

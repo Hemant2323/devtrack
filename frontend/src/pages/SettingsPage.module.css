@@ -1,0 +1,166 @@
+/* Project settings. A narrow reading column rather than a full-width table —
+   this is a form, not a dataset. */
+
+.body {
+  padding: var(--sp-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+  max-width: 720px;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* The archive card is destructive; a red edge marks it without shouting. */
+.panelDanger { border-color: var(--danger-fg); }
+
+.panelHead {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-5) var(--sp-6);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.panelTitle { font-size: var(--fs-13); font-weight: var(--fw-semibold); color: var(--text); }
+.panelBody { padding: var(--sp-6); }
+
+.form { display: flex; flex-direction: column; gap: var(--sp-6); }
+
+.formActions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-5) var(--sp-6);
+  border-top: 1px solid var(--border-subtle);
+  background: var(--surface-inset);
+}
+.formHint { margin-right: auto; font-size: var(--fs-12); color: var(--text-subtle); }
+
+/* Read-only facts sit as a definition list, visually distinct from inputs so
+   nobody tries to type in them. */
+.facts { display: flex; flex-direction: column; }
+.factRow {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+  padding: var(--sp-4) var(--sp-6);
+  border-bottom: 1px solid var(--border-subtle);
+  min-height: 44px;
+}
+.factRow:last-child { border-bottom: none; }
+.factLabel { font-size: var(--fs-12); color: var(--text-subtle); flex: none; width: 132px; }
+.factValue {
+  margin-left: auto;
+  font-size: var(--fs-12);
+  color: var(--text);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.factMono { font-family: var(--font-mono); font-weight: var(--fw-semibold); }
+.factNote { font-size: var(--fs-11); color: var(--text-subtle); margin-left: var(--sp-4); }
+
+.keyTile {
+  display: inline-grid;
+  place-items: center;
+  min-width: 44px;
+  height: 24px;
+  padding: 0 var(--sp-4);
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-family: var(--font-mono);
+  font-size: var(--fs-11);
+  font-weight: var(--fw-bold);
+}
+.keyTileArchived { background: var(--n-500); }
+
+.archiveText {
+  font-size: var(--fs-13);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 62ch;
+}
+.archiveActions { display: flex; align-items: center; gap: var(--sp-4); margin-top: var(--sp-6); }
+
+.readOnlyNote {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--surface-inset);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-12);
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+.readOnlyNote svg { flex: none; margin-top: 1px; }
+
+.archivedBanner {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-8);
+  background: var(--warning-bg);
+  color: var(--warning-fg);
+  border-bottom: 1px solid var(--border);
+  font-size: var(--fs-13);
+}
+
+.errorBar {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  margin: var(--sp-6) var(--sp-8) 0;
+  max-width: 720px;
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-13);
+  animation: dt-rise-in var(--dur-fast) var(--ease-out);
+}
+.errorBar svg { flex: none; margin-top: 2px; }
+.errorDismiss {
+  margin-left: auto;
+  color: inherit;
+  opacity: 0.7;
+  padding: 0 var(--sp-3);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+}
+.errorDismiss:hover { opacity: 1; }
+
+.saved {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-12);
+  color: var(--success-fg);
+}
+
+.confirmText { font-size: var(--fs-13); line-height: 1.6; color: var(--text-secondary); }
+.confirmName { font-weight: var(--fw-semibold); color: var(--text); }
+
+.skelPanel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+@media (max-width: 767px) {
+  .body { padding: var(--sp-5); }
+  .factLabel { width: 96px; }
+  .formActions { flex-wrap: wrap; }
+  .errorBar { margin-left: var(--sp-5); margin-right: var(--sp-5); }
+  .archivedBanner { padding-left: var(--sp-5); padding-right: var(--sp-5); }
+}
