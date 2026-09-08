@@ -1,11 +1,11 @@
 """User table (SRS §2.3, docs/03-Architecture.md §2)."""
 
-from datetime import datetime, timezone
+from datetime import datetime
 
 from sqlalchemy import DateTime, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.database import Base
+from app.database import Base, utcnow
 
 
 class User(Base):
@@ -17,6 +17,4 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(255), unique=True, index=True)
     # bcrypt output is 60 chars; never store the plain password (NFR-3)
     password_hash: Mapped[str] = mapped_column(String(60))
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=lambda: datetime.now(timezone.utc)
-    )
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)

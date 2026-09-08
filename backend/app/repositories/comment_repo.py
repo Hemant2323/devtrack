@@ -1,10 +1,9 @@
 """Comment queries."""
 
-from datetime import datetime, timezone
-
 from sqlalchemy import select
 from sqlalchemy.orm import Session, selectinload
 
+from app.database import utcnow
 from app.models.notification import Comment
 
 
@@ -32,7 +31,7 @@ def create(db: Session, issue_id: int, author_id: int, body: str) -> Comment:
 
 def update(db: Session, comment: Comment, body: str) -> Comment:
     comment.body = body
-    comment.edited_at = datetime.now(timezone.utc)
+    comment.edited_at = utcnow()
     db.flush()
     return comment
 

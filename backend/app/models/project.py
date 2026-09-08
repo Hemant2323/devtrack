@@ -1,12 +1,12 @@
 """Project aggregate: projects, memberships (RBAC), components (FR-2)."""
 
 import enum
-from datetime import datetime, timezone
+from datetime import datetime
 
 from sqlalchemy import Boolean, DateTime, Enum, ForeignKey, Integer, String, Text, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.database import Base
+from app.database import Base, utcnow
 
 
 class Role(str, enum.Enum):
@@ -28,9 +28,7 @@ class Project(Base):
     archived: Mapped[bool] = mapped_column(Boolean, default=False)
     # Source of sequential issue numbers (Sprint 2); incremented atomically.
     issue_counter: Mapped[int] = mapped_column(Integer, default=0)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=lambda: datetime.now(timezone.utc)
-    )
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
 
     members: Mapped[list["ProjectMember"]] = relationship(back_populates="project")
     components: Mapped[list["Component"]] = relationship()
@@ -45,9 +43,7 @@ class ProjectMember(Base):
     project_id: Mapped[int] = mapped_column(ForeignKey("projects.id"), index=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
     role: Mapped[Role] = mapped_column(Enum(Role))
-    joined_at: Mapped[datetime] = mapped_column(
-        DateTime, default=lambda: datetime.now(timezone.utc)
-    )
+    joined_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
 
     project: Mapped[Project] = relationship(back_populates="members")
     user = relationship("User")

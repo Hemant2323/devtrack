@@ -5,15 +5,23 @@ test (dependency override on get_db). Fast, isolated, and the dev
 database is never touched.
 """
 
-import pytest
-from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
+import os
 
-import app.models  # noqa: F401 — register all tables on Base.metadata
-from app.database import Base, get_db
-from app.main import app
+# JWT_SECRET is required with no default, so a deployment cannot run with a
+# published key. The suite therefore has to supply one, and it must happen
+# before app.config is imported below. setdefault, so a value already in the
+# environment still wins.
+os.environ.setdefault("JWT_SECRET", "test-only-secret-not-used-in-production")
+
+import pytest  # noqa: E402
+from fastapi.testclient import TestClient  # noqa: E402
+from sqlalchemy import create_engine  # noqa: E402
+from sqlalchemy.orm import sessionmaker  # noqa: E402
+from sqlalchemy.pool import StaticPool  # noqa: E402
+
+import app.models  # noqa: F401,E402 — register all tables on Base.metadata
+from app.database import Base, get_db  # noqa: E402
+from app.main import app  # noqa: E402
 
 
 @pytest.fixture()

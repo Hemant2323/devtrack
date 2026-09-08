@@ -1,12 +1,12 @@
 """Test case and test run models (FR-9)."""
 
 import enum
-from datetime import date, datetime, timezone
+from datetime import date, datetime
 
 from sqlalchemy import Date, DateTime, Enum, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.database import Base
+from app.database import Base, utcnow
 
 
 class TestResult(str, enum.Enum):
@@ -45,13 +45,11 @@ class TestCase(Base):
     deadline: Mapped[date | None] = mapped_column(Date, nullable=True, index=True)
 
     created_by: Mapped[int] = mapped_column(ForeignKey("users.id"))
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=lambda: datetime.now(timezone.utc)
-    )
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
     updated_at: Mapped[datetime] = mapped_column(
         DateTime,
-        default=lambda: datetime.now(timezone.utc),
-        onupdate=lambda: datetime.now(timezone.utc),
+        default=utcnow,
+        onupdate=utcnow,
     )
 
     runs: Mapped[list["TestRun"]] = relationship(
@@ -83,8 +81,6 @@ class TestRun(Base):
     )
 
     executed_by: Mapped[int] = mapped_column(ForeignKey("users.id"))
-    executed_at: Mapped[datetime] = mapped_column(
-        DateTime, default=lambda: datetime.now(timezone.utc)
-    )
+    executed_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
 
     test_case: Mapped[TestCase] = relationship(back_populates="runs")

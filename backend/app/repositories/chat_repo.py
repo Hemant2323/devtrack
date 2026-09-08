@@ -11,11 +11,11 @@ This module is the only place that builds queries against chat_messages, so
 those two predicates are not repeated anywhere else in the codebase.
 """
 
-from datetime import datetime, timezone
 
 from sqlalchemy import and_, case, func, or_, select
 from sqlalchemy.orm import Session, selectinload
 
+from app.database import utcnow
 from app.models.chat import ChatMessage
 
 
@@ -159,7 +159,7 @@ def create(
 
 def update(db: Session, message: ChatMessage, body: str) -> ChatMessage:
     message.body = body
-    message.edited_at = datetime.now(timezone.utc)
+    message.edited_at = utcnow()
     db.flush()
     return message
 

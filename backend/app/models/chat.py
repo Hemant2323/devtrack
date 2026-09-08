@@ -16,12 +16,12 @@ explicitly; a query that forgets it would show private messages in the team
 transcript. That predicate lives in exactly one place (chat_repo).
 """
 
-from datetime import datetime, timezone
+from datetime import datetime
 
 from sqlalchemy import DateTime, ForeignKey, Index, Integer, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.database import Base
+from app.database import Base, utcnow
 
 
 class ChatMessage(Base):
@@ -40,9 +40,7 @@ class ChatMessage(Base):
         ForeignKey("users.id"), nullable=True
     )
     body: Mapped[str] = mapped_column(Text)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=lambda: datetime.now(timezone.utc)
-    )
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
     # Non-null only after an edit
     edited_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
 

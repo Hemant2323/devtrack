@@ -1,10 +1,9 @@
 """All database queries for issues."""
 
-from datetime import datetime, timezone
-
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app.database import utcnow
 from app.models.issue import Issue, Status
 
 
@@ -77,5 +76,5 @@ def update(db: Session, issue: Issue, **fields) -> Issue:
 
 
 def soft_delete(db: Session, issue: Issue) -> None:
-    issue.deleted_at = datetime.now(timezone.utc)
+    issue.deleted_at = utcnow()
     db.flush()

@@ -1,7 +1,7 @@
 """Issue, Sprint, and Activity models (FR-3, FR-5 schema, FR-6.2)."""
 
 import enum
-from datetime import date, datetime, timezone
+from datetime import date, datetime
 
 from sqlalchemy import (
     Date,
@@ -14,7 +14,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.database import Base
+from app.database import Base, utcnow
 
 
 # ---------- enums ----------
@@ -76,9 +76,7 @@ class Sprint(Base):
     state: Mapped[SprintState] = mapped_column(
         Enum(SprintState), default=SprintState.PLANNED
     )
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=lambda: datetime.now(timezone.utc)
-    )
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
 
 
 # ---------- Issue ----------
@@ -129,13 +127,11 @@ class Issue(Base):
     # Soft delete: deleted_at IS NULL means "alive" (FR-3.5)
     deleted_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
 
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=lambda: datetime.now(timezone.utc)
-    )
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
     updated_at: Mapped[datetime] = mapped_column(
         DateTime,
-        default=lambda: datetime.now(timezone.utc),
-        onupdate=lambda: datetime.now(timezone.utc),
+        default=utcnow,
+        onupdate=utcnow,
     )
 
     activities: Mapped[list["Activity"]] = relationship(
@@ -166,8 +162,6 @@ class Activity(Base):
     old_value: Mapped[str | None] = mapped_column(Text, nullable=True)
     new_value: Mapped[str | None] = mapped_column(Text, nullable=True)
 
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=lambda: datetime.now(timezone.utc)
-    )
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
 
     issue: Mapped[Issue] = relationship(back_populates="activities")

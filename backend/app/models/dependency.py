@@ -19,12 +19,12 @@ cycles are service-level rules; expressing them in SQL is not portable, and
 a cycle is a graph property no constraint can see.
 """
 
-from datetime import datetime, timezone
+from datetime import datetime
 
 from sqlalchemy import DateTime, ForeignKey, Integer, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.database import Base
+from app.database import Base, utcnow
 
 
 class IssueDependency(Base):
@@ -42,9 +42,7 @@ class IssueDependency(Base):
     )
     # The issue that is waiting on it.
     blocked_issue_id: Mapped[int] = mapped_column(ForeignKey("issues.id"), index=True)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=lambda: datetime.now(timezone.utc)
-    )
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
 
     # Two paths to issues, so each relationship names its own column.
     blocking_issue = relationship("Issue", foreign_keys=[blocking_issue_id])

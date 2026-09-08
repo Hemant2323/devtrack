@@ -17,9 +17,14 @@ class Settings(BaseSettings):
     # Frontend origins allowed to call this API (CORS).
     cors_origins: list[str] = ["http://localhost:5173"]
 
-    # JWT settings (FR-1.2). The secret signs every token — anyone who has
-    # it can forge logins, so in production it MUST come from .env.
-    jwt_secret: str = "dev-only-secret-change-me"
+    # JWT settings (FR-1.2). The secret signs every token, so anyone holding it
+    # can mint a session for any user. It is deliberately REQUIRED and has no
+    # default: a deployment that forgets to set it fails at startup rather than
+    # running with a value published in this repository.
+    #
+    # Local development supplies it through .env (see .env.example); the test
+    # suite sets it in tests/conftest.py before importing the app.
+    jwt_secret: str
     jwt_algorithm: str = "HS256"
     access_token_minutes: int = 30
     refresh_token_days: int = 7

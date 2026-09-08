@@ -1,12 +1,12 @@
 """Comment and Notification models (FR-6.1, FR-8)."""
 
 import enum
-from datetime import datetime, timezone
+from datetime import datetime
 
 from sqlalchemy import Boolean, DateTime, Enum, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.database import Base
+from app.database import Base, utcnow
 
 
 class Comment(Base):
@@ -16,9 +16,7 @@ class Comment(Base):
     issue_id: Mapped[int] = mapped_column(ForeignKey("issues.id"), index=True)
     author_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     body: Mapped[str] = mapped_column(Text)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=lambda: datetime.now(timezone.utc)
-    )
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
     # Non-null only after an edit
     edited_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
 
@@ -41,6 +39,4 @@ class Notification(Base):
     message: Mapped[str] = mapped_column(String(255))
     issue_id: Mapped[int | None] = mapped_column(ForeignKey("issues.id"), nullable=True)
     read: Mapped[bool] = mapped_column(Boolean, default=False)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=lambda: datetime.now(timezone.utc)
-    )
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
